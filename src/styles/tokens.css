@@ -1,0 +1,23 @@
+:root {
+  --ink: #171b24;
+  --night: #0d1520;
+  --paper: #f3eedf;
+  --fluorescent: #c8e7d4;
+  --amber: #e7b66a;
+  --vermilion: #c95745;
+
+  --font-body: system-ui, "Yu Gothic UI", "Hiragino Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+
+  --space-xs: 0.4rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --motion-fast: 180ms;
+  --motion-normal: 280ms;
+}

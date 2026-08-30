@@ -1,0 +1,77 @@
+import type { NewsArticle } from "../../domain";
+import { leadingAxisCondition, newsArticle } from "./helpers";
+
+export const TASK5_DAY2_NEWS: NewsArticle[] = [
+  newsArticle({
+    id: "news_d2_direct_hako3_self_repair",
+    day: 2,
+    role: "direct",
+    notificationHeadline: "配送ロボ一台、点検のため運休",
+    headline: "配送端末、自主点検を終えて運行再開",
+    body: "端末は管理者の指示を待たず、自分で選んだ部品交換手順を配送網へ共有した。交換に使われた精密ドライバーの購入記録も残る。",
+    conditions: {
+      customerState: { customerId: "hako3", state: "self_modified" },
+    },
+    priority: 200,
+    exclusiveGroup: "d2_machine_network",
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d2_direct_fallback",
+    day: 2,
+    role: "direct",
+    notificationHeadline: "夜間配送、一件を予定どおり完了",
+    headline: "夜間配送、一件の経路記録を再分類",
+    body: "同じ配送箱が『完了』『停止』『待機』のいずれにも読める記録へ置き換わった。端末の電源状態と今夜のレシートだけが以前の順序を残している。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+  newsArticle({
+    id: "news_d2_trend_machine_delivery",
+    day: 2,
+    role: "trend",
+    notificationHeadline: "無人配送は来月まで実証運用",
+    headline: "市内配送の半数、自律端末が担当",
+    body: "市は自律端末の運用を以前からの制度だと説明する。昨日まで有人だった集荷所の写真には、整いすぎた配送箱だけが並ぶ。",
+    conditions: leadingAxisCondition("machine"),
+    priority: 200,
+    exclusiveGroup: "d2_machine_network",
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d2_trend_cosmic_arrival",
+    day: 2,
+    role: "trend",
+    notificationHeadline: "上空の光、気象現象と発表",
+    headline: "観光課、上空の到着灯を案内図へ掲載",
+    body: "市の観光図には、今夜から点滅する光が『来訪者用の目印』として追加された。保存通知では同じ光を気象現象としている。",
+    conditions: leadingAxisCondition("cosmic"),
+    priority: 200,
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d2_trend_fallback",
+    day: 2,
+    role: "trend",
+    notificationHeadline: "市の夜間統計、区分変更なし",
+    headline: "夜間統計、新しい利用者区分を追加",
+    body: "病院、配送、観光、戸籍の集計に新しい区分が同時に加わった。どの部署も、以前から使っていた区分だと説明している。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+  newsArticle({
+    id: "news_d2_discrepancy_hospital_fallback",
+    day: 2,
+    role: "discrepancy",
+    notificationHeadline: "市立病院、夜間受付を二か所へ縮小",
+    headline: "夜間受付は開院以来四か所",
+    body: "現在の記事は四か所の受付を昔からの体制として紹介する。勤務中に保存された通知と、同じ時刻の病院記録だけが二か所と示している。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+];
+
+export const TASK5_NEWS_DAY2 = TASK5_DAY2_NEWS;

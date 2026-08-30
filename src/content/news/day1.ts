@@ -1,0 +1,77 @@
+import type { NewsArticle } from "../../domain";
+import { leadingAxisCondition, newsArticle } from "./helpers";
+
+export const TASK5_DAY1_NEWS: NewsArticle[] = [
+  newsArticle({
+    id: "news_d1_direct_hotaru_boundary",
+    day: 1,
+    role: "direct",
+    notificationHeadline: "商店街の入店ベル誤作動、客の姿なし",
+    headline: "防犯映像、白い境目の内側に少女",
+    body: "ドアは一度も開いていないが、映像には白い袋を持つ少女が残り、同時刻のPOSには帰魂線香と盛り塩の会計が記録されている。",
+    conditions: {
+      customerState: { customerId: "hotaru", state: "sealed" },
+    },
+    priority: 200,
+    exclusiveGroup: "d1_spirit_boundary",
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d1_direct_fallback",
+    day: 1,
+    role: "direct",
+    notificationHeadline: "季節限定おにぎり、今夜で販売終了",
+    headline: "夜勤向け限定食、例年どおり販売継続",
+    body: "市内の深夜店は限定食の取り扱いに変更はないとしている。保存通知だけが販売終了を告げ、今夜のレシートには見慣れない商品名が残った。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+  newsArticle({
+    id: "news_d1_trend_undead_night",
+    day: 1,
+    role: "trend",
+    notificationHeadline: "市の日の出、午前4時52分",
+    headline: "夜勤統計、『日の出まで』を『交代まで』へ訂正",
+    body: "市の勤務表から日の出時刻の欄だけが消え、夜勤者の交代時刻で一日を区切る説明へ差し替えられた。",
+    conditions: leadingAxisCondition("undead"),
+    priority: 200,
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d1_trend_spirit_reflection",
+    day: 1,
+    role: "trend",
+    notificationHeadline: "商店街カメラ、通行人五人を記録",
+    headline: "夜間通行量、一人分を反射計測として追加",
+    body: "同じ映像を再集計すると、ガラスにだけ映る一人が通行者へ含まれていた。現場の人数は五人のままだという。",
+    conditions: leadingAxisCondition("spirit"),
+    priority: 200,
+    exclusiveGroup: "d1_spirit_boundary",
+    isFallback: false,
+  }),
+  newsArticle({
+    id: "news_d1_trend_fallback",
+    day: 1,
+    role: "trend",
+    notificationHeadline: "市内の夜間人口、前週と同数",
+    headline: "夜間人口、一人分を集計訂正",
+    body: "訂正理由は機器の読み違いとされるが、保存画像と現在の集計表では人数が一人だけ合わない。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+  newsArticle({
+    id: "news_d1_local_clock_fallback",
+    day: 1,
+    role: "local",
+    notificationHeadline: "駅前時計、午前0時18分を表示",
+    headline: "駅前の時計、午前0時19分で一致",
+    body: "駅前の三つの時計はすべて0時19分を示している。スマートフォンの保存通知だけが、同じ写真に0時18分と記録している。",
+    conditions: { true: true },
+    priority: -100,
+    isFallback: true,
+  }),
+];
+
+export const TASK5_NEWS_DAY1 = TASK5_DAY1_NEWS;
