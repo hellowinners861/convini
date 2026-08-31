@@ -1,0 +1,318 @@
+.content {
+  display: grid;
+  gap: var(--space-lg);
+  padding: var(--space-lg) var(--space-xl) var(--space-xl);
+}
+
+.contentNarrow {
+  max-width: 48rem;
+}
+
+.prose {
+  margin: 0;
+  color: #4e4a40;
+  line-height: 1.85;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+  padding-left: 1.4rem;
+  color: #4e4a40;
+  line-height: 1.7;
+}
+
+.panel {
+  border: 1px solid rgb(23 27 36 / 16%);
+  padding: var(--space-lg);
+  background: rgb(255 255 255 / 28%);
+}
+
+.panel h2,
+.panel h3 {
+  margin-top: 0;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-md);
+  margin: 0;
+}
+
+.metaGrid div {
+  border-left: 3px solid var(--fluorescent);
+  padding-left: var(--space-sm);
+}
+
+.metaGrid dt {
+  color: #5b5a51;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+}
+
+.metaGrid dd {
+  margin: 0.25rem 0 0;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.button,
+.buttonSecondary,
+.buttonWarning {
+  min-height: 2.8rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.button {
+  background: var(--ink);
+}
+
+.buttonSecondary {
+  background: #395649;
+}
+
+.buttonWarning {
+  border-color: var(--vermilion);
+  background: var(--vermilion);
+}
+
+.button:hover:not(:disabled),
+.buttonSecondary:hover:not(:disabled),
+.buttonWarning:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.button:disabled,
+.buttonSecondary:disabled,
+.buttonWarning:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.status {
+  min-height: 1.5rem;
+  margin: 0;
+  color: #546156;
+  font-size: 0.86rem;
+}
+
+.decisionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.shortcutHint {
+  display: inline-grid;
+  min-width: 1.35em;
+  margin-right: 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.05rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  line-height: 1.2;
+  place-items: center;
+}
+
+.dialogBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  overflow-y: auto;
+  padding: var(--space-lg);
+  background: rgb(13 21 32 / 68%);
+}
+
+.recommendationDialog {
+  width: min(100%, 38rem);
+  max-height: calc(100vh - (2 * var(--space-lg)));
+  overflow-y: auto;
+  border: 1px solid var(--ink);
+  padding: var(--space-lg);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 1rem 3rem rgb(13 21 32 / 28%);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.dialogHeader h3 {
+  margin: 0;
+}
+
+.dialogCloseButton {
+  flex: 0 0 auto;
+  min-height: 2.5rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.dialogCloseButton:hover {
+  background: rgb(23 27 36 / 8%);
+}
+
+.recommendationList {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.recommendationButton {
+  display: grid;
+  gap: 0.2rem;
+  border: 1px solid rgb(23 27 36 / 24%);
+  padding: var(--space-sm) var(--space-md);
+  background: rgb(200 231 212 / 22%);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.recommendationButton small {
+  color: #5b5a51;
+}
+
+.recommendationProductName {
+  font-weight: 700;
+}
+
+.recommendationButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.receipt {
+  display: grid;
+  gap: 0.35rem;
+  border-block: 1px dashed rgb(23 27 36 / 45%);
+  padding: var(--space-md) 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.receipt p {
+  margin: 0;
+}
+
+.newsList {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.newsCard {
+  display: grid;
+  gap: var(--space-sm);
+  border: 1px solid rgb(23 27 36 / 18%);
+  padding: var(--space-lg);
+  background: rgb(255 255 255 / 28%);
+}
+
+.newsCard h2,
+.newsCard h3,
+.newsCard p {
+  margin: 0;
+}
+
+.newsCard h2 {
+  font-size: 1.15rem;
+}
+
+.newsCard h3 {
+  color: #395649;
+  font-size: 1.35rem;
+}
+
+.newsCard p {
+  color: #4e4a40;
+  line-height: 1.75;
+}
+
+.newsMeta {
+  color: #5b5a51;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.toolbarButton {
+  border: 1px solid rgb(23 27 36 / 46%);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+}
+
+.toolbarButton:hover {
+  background: rgb(23 27 36 / 8%);
+}
+
+@media (max-width: 719px) {
+  .content {
+    padding: var(--space-md) var(--space-md)
+      calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .panel {
+    padding: var(--space-md);
+  }
+
+  .metaGrid,
+  .decisionGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .decisionActions {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin-inline: calc(-1 * var(--space-md));
+    padding: var(--space-sm) var(--space-md)
+      calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
+    background: rgb(243 238 223 / 96%);
+    box-shadow: 0 -0.35rem 1rem rgb(13 21 32 / 14%);
+  }
+
+  .dialogBackdrop {
+    align-items: start;
+    padding: var(--space-md);
+  }
+
+  .recommendationDialog {
+    max-height: calc(100vh - (2 * var(--space-md)));
+    padding: var(--space-md);
+  }
+}

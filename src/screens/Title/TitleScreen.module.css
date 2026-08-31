@@ -1,0 +1,414 @@
+.shell {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+  padding: var(--space-xl);
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 72% 18%, rgb(200 231 212 / 12%), transparent 28rem),
+    linear-gradient(135deg, var(--night), var(--ink));
+}
+
+.shell::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.42;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgb(243 238 223 / 3%) 0,
+    rgb(243 238 223 / 3%) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.lightBand {
+  position: absolute;
+  top: 7vh;
+  left: 8vw;
+  width: 84vw;
+  height: 1px;
+  background: var(--fluorescent);
+  box-shadow: 0 0 32px 8px rgb(200 231 212 / 18%);
+  opacity: 0.65;
+}
+
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(19rem, 0.9fr);
+  width: min(100%, 980px);
+  min-height: min(70vh, 620px);
+  overflow: hidden;
+  border: 1px solid rgb(243 238 223 / 18%);
+  background: rgb(13 21 32 / 76%);
+  box-shadow: 0 24px 70px rgb(0 0 0 / 25%);
+}
+
+.scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 25rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgb(200 231 212 / 10%), transparent 40%),
+    linear-gradient(160deg, #202e3b, #101822 70%);
+}
+
+.scene::before {
+  position: absolute;
+  right: 10%;
+  bottom: 0;
+  left: 0;
+  height: 34%;
+  content: "";
+  background: linear-gradient(180deg, transparent, rgb(6 10 15 / 80%));
+  z-index: -1;
+}
+
+.scene::after {
+  position: absolute;
+  inset: 13% 10% auto;
+  height: 4px;
+  content: "";
+  background: var(--fluorescent);
+  box-shadow: 0 0 26px 7px rgb(200 231 212 / 20%);
+  opacity: 0.72;
+}
+
+.storefront {
+  position: absolute;
+  top: 27%;
+  left: 14%;
+  display: grid;
+  gap: var(--space-xs);
+  width: 68%;
+  padding: var(--space-md);
+  border: 1px solid rgb(243 238 223 / 25%);
+  background: rgb(23 27 36 / 58%);
+  transform: skewY(-2deg);
+}
+
+.storefrontSign,
+.storefrontSubsign {
+  display: block;
+  letter-spacing: 0.17em;
+  text-align: center;
+}
+
+.storefrontSign {
+  color: var(--amber);
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+  font-weight: 700;
+}
+
+.storefrontSubsign {
+  color: var(--fluorescent);
+  font-size: 0.64rem;
+}
+
+.windowGlow {
+  position: absolute;
+  top: 45%;
+  left: 21%;
+  width: 48%;
+  height: 22%;
+  border: 2px solid rgb(200 231 212 / 35%);
+  background: linear-gradient(120deg, rgb(231 182 106 / 22%), rgb(200 231 212 / 10%));
+  box-shadow: inset 0 0 22px rgb(200 231 212 / 12%);
+  transform: skewY(-2deg);
+}
+
+.counter {
+  position: absolute;
+  right: 0;
+  bottom: 18%;
+  left: 8%;
+  height: 12%;
+  border-top: 2px solid rgb(231 182 106 / 45%);
+  background: linear-gradient(180deg, rgb(23 27 36 / 18%), rgb(0 0 0 / 48%));
+  transform: perspective(280px) rotateX(9deg);
+}
+
+.receiptStack {
+  position: absolute;
+  right: 18%;
+  bottom: 24%;
+  width: 16%;
+  height: 12%;
+  border: 1px solid rgb(243 238 223 / 50%);
+  background: var(--paper);
+  box-shadow: 8px -7px 0 rgb(243 238 223 / 76%);
+  transform: rotate(5deg);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(var(--space-lg), 5vw, var(--space-2xl));
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.eyebrow,
+.footer,
+.status {
+  margin: 0;
+  letter-spacing: 0.08em;
+}
+
+.eyebrow {
+  color: #546156;
+  font-size: 0.73rem;
+  font-weight: 700;
+}
+
+.title {
+  display: grid;
+  gap: 0.04em;
+  margin: var(--space-md) 0;
+  font-size: clamp(2.75rem, 7vw, 5.8rem);
+  font-weight: 700;
+  letter-spacing: -0.08em;
+  line-height: 0.96;
+}
+
+.title span:last-child {
+  color: #395649;
+}
+
+.lede {
+  max-width: 25rem;
+  margin: 0;
+  color: #4e4a40;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.receipt {
+  display: grid;
+  gap: 0.3rem;
+  width: min(100%, 18rem);
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  border-block: 1px dashed rgb(23 27 36 / 40%);
+  color: #5b5a51;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  line-height: 1.4;
+}
+
+.receipt p {
+  margin: 0;
+}
+
+.startButton {
+  min-width: 10rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1.25rem;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.continueButton,
+.confirmButton,
+.cancelButton {
+  min-height: 2.8rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem 1.25rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.continueButton {
+  background: transparent;
+  color: var(--ink);
+}
+
+.confirmButton {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.cancelButton {
+  background: transparent;
+  color: var(--ink);
+}
+
+.continueButton:hover,
+.continueButton:focus-visible,
+.cancelButton:hover,
+.cancelButton:focus-visible {
+  background: rgb(57 86 73 / 12%);
+}
+
+.confirmButton:hover,
+.confirmButton:focus-visible {
+  background: #395649;
+}
+
+.confirmation {
+  width: min(100%, 25rem);
+  margin-top: var(--space-md);
+  border-left: 3px solid var(--amber);
+  padding: var(--space-md);
+  background: rgb(231 182 106 / 14%);
+}
+
+.confirmation h2,
+.confirmation p {
+  margin-top: 0;
+}
+
+.confirmation p {
+  margin-bottom: var(--space-md);
+  color: #4e4a40;
+  line-height: 1.6;
+}
+
+.notice,
+.error {
+  max-width: 28rem;
+  margin: var(--space-md) 0 0;
+  line-height: 1.6;
+}
+
+.notice {
+  color: #395649;
+}
+
+.error {
+  color: #9e392b;
+}
+
+.startButton:hover {
+  background: #395649;
+  transform: translateY(-2px);
+}
+
+.startButton:active {
+  transform: translateY(0);
+}
+
+.status {
+  min-height: 1.4rem;
+  margin-top: var(--space-sm);
+  color: #5b5a51;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.footer {
+  position: absolute;
+  right: var(--space-xl);
+  bottom: var(--space-md);
+  color: rgb(243 238 223 / 60%);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+}
+
+@media (max-width: 1099px) {
+  .panel {
+    grid-template-columns: 1fr;
+    width: min(100%, 680px);
+  }
+
+  .scene {
+    min-height: 16rem;
+  }
+
+  .storefront {
+    top: 20%;
+    left: 14%;
+    width: 58%;
+  }
+
+  .windowGlow {
+    top: 39%;
+    left: 20%;
+    width: 42%;
+    height: 27%;
+  }
+
+  .copy {
+    padding: var(--space-xl);
+  }
+}
+
+@media (max-width: 719px) {
+  .shell {
+    display: block;
+    min-height: 100svh;
+    padding: var(--space-md);
+  }
+
+  .panel {
+    min-height: 0;
+    margin-bottom: var(--space-xl);
+  }
+
+  .scene {
+    min-height: 12rem;
+  }
+
+  .copy {
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+  }
+
+  .title {
+    font-size: clamp(2.6rem, 15vw, 4.2rem);
+  }
+
+  .startButton {
+    width: 100%;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .continueButton,
+  .confirmButton,
+  .cancelButton {
+    flex: 1 1 100%;
+  }
+
+  .footer {
+    position: static;
+    margin: 0 var(--space-xs);
+    font-size: 0.58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .startButton {
+    transition: none;
+  }
+
+  .startButton:hover,
+  .startButton:active {
+    transform: none;
+  }
+}

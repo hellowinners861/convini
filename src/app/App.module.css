@@ -1,0 +1,132 @@
+.appShell {
+  min-height: 100svh;
+  background: var(--night);
+}
+
+.appShell[data-day="1"] {
+  --day-accent: rgb(111 171 139 / 14%);
+}
+
+.appShell[data-day="2"] {
+  --day-accent: rgb(224 170 86 / 14%);
+}
+
+.appShell[data-day="3"] {
+  --day-accent: rgb(150 143 196 / 14%);
+}
+
+.appShell[data-day="4"] {
+  --day-accent: rgb(74 166 177 / 14%);
+}
+
+.appShell[data-day="5"] {
+  --day-accent: rgb(201 87 69 / 14%);
+}
+
+.statusScreen {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: var(--space-xl);
+  color: var(--paper);
+  background: var(--night);
+}
+
+.statusScreen p {
+  margin: 0;
+}
+
+.appHeader {
+  position: fixed;
+  z-index: 2;
+  top: var(--space-md);
+  right: var(--space-md);
+  left: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  color: rgb(243 238 223 / 80%);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+.appHeader > span,
+.appNotices,
+.headerControls,
+.resetButton {
+  pointer-events: auto;
+}
+
+.appNotices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  color: var(--fluorescent);
+  text-align: center;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.appNotice,
+.saveStatus,
+.appError {
+  padding: 0.25rem 0.45rem;
+  background: rgb(13 21 32 / 72%);
+}
+
+.appError {
+  color: #ffb4a8;
+}
+
+.muteButton,
+.resetButton {
+  border: 1px solid rgb(243 238 223 / 35%);
+  padding: 0.45rem 0.7rem;
+  background: rgb(13 21 32 / 65%);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.muteButton:hover,
+.muteButton:focus-visible,
+.resetButton:hover,
+.resetButton:focus-visible {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+@media (max-width: 719px) {
+  .appHeader {
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: 0.62rem;
+  }
+
+  .appShell {
+    padding-top: 5rem;
+  }
+
+  .appNotices {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .headerControls {
+    gap: var(--space-xs);
+  }
+
+  .muteButton,
+  .resetButton {
+    padding: 0.4rem 0.5rem;
+  }
+}
