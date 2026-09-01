@@ -1,6 +1,8 @@
 .appShell {
   min-height: 100svh;
-  background: var(--night);
+  background:
+    radial-gradient(circle at 80% 0%, rgb(177 244 205 / 5%), transparent 34rem),
+    var(--night);
 }
 
 .appShell[data-day="1"] {
@@ -37,27 +39,35 @@
 }
 
 .appHeader {
-  position: fixed;
-  z-index: 2;
-  top: var(--space-md);
-  right: var(--space-md);
-  left: var(--space-md);
+  position: sticky;
+  z-index: 5;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md);
-  color: rgb(243 238 223 / 80%);
+  min-height: 4.2rem;
+  border-bottom: 1px solid rgb(177 244 205 / 14%);
+  padding: var(--space-sm) clamp(var(--space-md), 3vw, var(--space-xl));
+  background: rgb(5 12 19 / 91%);
+  color: rgb(243 238 223 / 82%);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.06em;
-  pointer-events: none;
+  box-shadow: 0 0.7rem 1.5rem rgb(0 0 0 / 18%);
+  backdrop-filter: blur(14px);
 }
 
-.appHeader > span,
 .appNotices,
 .headerControls,
 .resetButton {
   pointer-events: auto;
+}
+
+.appHeader > span {
+  color: var(--paper);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .appNotices {
@@ -78,8 +88,9 @@
 .appNotice,
 .saveStatus,
 .appError {
+  border: 1px solid rgb(177 244 205 / 15%);
   padding: 0.25rem 0.45rem;
-  background: rgb(13 21 32 / 72%);
+  background: rgb(14 29 38 / 82%);
 }
 
 .appError {
@@ -88,9 +99,9 @@
 
 .muteButton,
 .resetButton {
-  border: 1px solid rgb(243 238 223 / 35%);
+  border: 1px solid rgb(177 244 205 / 28%);
   padding: 0.45rem 0.7rem;
-  background: rgb(13 21 32 / 65%);
+  background: rgb(14 29 38 / 86%);
   color: inherit;
   cursor: pointer;
   font: inherit;
@@ -109,16 +120,15 @@
   .appHeader {
     align-items: flex-start;
     gap: var(--space-sm);
+    min-height: 7.4rem;
+    padding: var(--space-sm) var(--space-md);
     font-size: 0.62rem;
-  }
-
-  .appShell {
-    padding-top: 5rem;
+    flex-wrap: wrap;
   }
 
   .appNotices {
-    min-width: 0;
-    flex: 1;
+    order: 3;
+    width: 100%;
   }
 
   .headerControls {

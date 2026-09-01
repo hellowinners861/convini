@@ -1,23 +1,26 @@
 :root {
-  --ink: #171b24;
-  --night: #0d1520;
+  color-scheme: dark;
+
+  --night: #07121a;
+  --night-deep: #040a10;
+  --ink: #e9f0eb;
   --paper: #f3eedf;
-  --fluorescent: #c8e7d4;
-  --amber: #e7b66a;
-  --vermilion: #c95745;
+  --muted: #9eada8;
+  --fluorescent: #b1f4cd;
+  --amber: #efbf77;
+  --danger: #ffb4a8;
+  --line: rgb(177 244 205 / 18%);
+  --panel: #10232c;
+  --panel-raised: #172f38;
 
-  --font-body: system-ui, "Yu Gothic UI", "Hiragino Sans", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  --font-body: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
 
-  --space-xs: 0.4rem;
-  --space-sm: 0.75rem;
-  --space-md: 1.25rem;
-  --space-lg: 2rem;
-  --space-xl: 3rem;
-  --space-2xl: 4.5rem;
-
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --motion-fast: 180ms;
-  --motion-normal: 280ms;
+  --space-xs: 0.35rem;
+  --space-sm: 0.65rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
 }

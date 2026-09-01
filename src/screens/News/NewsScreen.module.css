@@ -1,0 +1,273 @@
+.newsLayout {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.8fr) minmax(14rem, 0.45fr);
+  justify-content: center;
+  gap: clamp(var(--space-lg), 5vw, 4rem);
+  padding: clamp(var(--space-md), 4vw, var(--space-xl));
+}
+
+.phone {
+  position: relative;
+  width: min(100%, 28rem);
+  min-height: 38rem;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 0.8rem solid #050b11;
+  border-radius: 2.4rem;
+  background: #101b23;
+  box-shadow:
+    0 1.6rem 3rem rgb(0 0 0 / 42%),
+    0 0 0 1px rgb(177 244 205 / 24%),
+    inset 0 0 0 1px rgb(177 244 205 / 12%);
+}
+
+.phoneNotch {
+  position: absolute;
+  z-index: 2;
+  top: -0.05rem;
+  left: 50%;
+  width: 8rem;
+  height: 1.35rem;
+  border-radius: 0 0 1rem 1rem;
+  background: #050b11;
+  transform: translateX(-50%);
+}
+
+.phoneNotch::after {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  width: 2rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  content: "";
+  background: rgb(177 244 205 / 35%);
+  transform: translateX(-50%);
+}
+
+.phoneStatusBar,
+.phoneAppBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-right: var(--space-md);
+  padding-left: var(--space-md);
+  font-family: var(--font-mono);
+}
+
+.phoneStatusBar {
+  height: 2.3rem;
+  padding-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.6rem;
+}
+
+.phoneAppBar {
+  min-height: 3.2rem;
+  border-top: 1px solid rgb(177 244 205 / 11%);
+  border-bottom: 1px solid rgb(177 244 205 / 18%);
+  background: rgb(177 244 205 / 5%);
+}
+
+.phoneBrand {
+  color: var(--paper);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.phoneSignal {
+  color: var(--fluorescent);
+  font-size: 0.62rem;
+}
+
+.phoneFeed {
+  display: grid;
+  gap: var(--space-sm);
+  max-height: 31.5rem;
+  overflow-y: auto;
+  padding: var(--space-md);
+  scrollbar-color: rgb(177 244 205 / 35%) transparent;
+}
+
+.article {
+  border: 1px solid rgb(177 244 205 / 15%);
+  padding: var(--space-md);
+  background: linear-gradient(145deg, rgb(23 43 50 / 88%), rgb(10 21 29 / 92%));
+}
+
+.articleOpen {
+  border-color: rgb(239 191 119 / 42%);
+  background: linear-gradient(145deg, rgb(50 45 39 / 78%), rgb(15 24 29 / 95%));
+}
+
+.articleMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  color: var(--fluorescent);
+  font-family: var(--font-mono);
+  font-size: 0.59rem;
+  letter-spacing: 0.11em;
+}
+
+.articleMeta span:last-child {
+  color: var(--amber);
+}
+
+.article h2 {
+  margin: var(--space-sm) 0 0;
+  color: var(--paper);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.articleBody,
+.notificationBody {
+  margin: var(--space-sm) 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.articleBody {
+  color: var(--paper);
+}
+
+.readButton {
+  width: 100%;
+  margin-top: var(--space-md);
+  border: 1px solid rgb(177 244 205 / 27%);
+  padding: 0.58rem 0.7rem;
+  background: rgb(177 244 205 / 6%);
+  color: var(--fluorescent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  text-align: left;
+}
+
+.readButton:hover:not(:disabled),
+.readButton:focus-visible:not(:disabled) {
+  border-color: var(--amber);
+  background: rgb(239 191 119 / 12%);
+  color: var(--amber);
+}
+
+.readButton:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.phoneHomeIndicator {
+  position: absolute;
+  right: 50%;
+  bottom: 0.3rem;
+  width: 5rem;
+  height: 0.22rem;
+  border-radius: 999px;
+  background: rgb(243 238 223 / 46%);
+  transform: translateX(50%);
+}
+
+.newsControls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.progressCard {
+  border-left: 2px solid var(--amber);
+  padding: var(--space-md);
+  background: rgb(177 244 205 / 5%);
+}
+
+.controlLabel {
+  margin: 0;
+  color: var(--fluorescent);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+}
+
+.progressValue {
+  margin: var(--space-md) 0 0;
+  color: var(--paper);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.progressHint {
+  margin: var(--space-sm) 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.advanceButton {
+  border: 1px solid var(--amber);
+  padding: 0.85rem 1rem;
+  background: rgb(239 191 119 / 10%);
+  color: var(--amber);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.advanceButton:hover:not(:disabled),
+.advanceButton:focus-visible:not(:disabled) {
+  background: rgb(239 191 119 / 18%);
+}
+
+.advanceButton:disabled {
+  border-color: rgb(177 244 205 / 18%);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (min-width: 720px) and (max-height: 1000px) {
+  .newsLayout {
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .phone {
+    min-height: 35rem;
+  }
+
+  .phoneFeed {
+    max-height: 28.5rem;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .newsLayout {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .phone {
+    min-height: 34rem;
+  }
+
+  .phoneFeed {
+    max-height: 27.5rem;
+  }
+
+  .newsControls {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .readButton,
+  .advanceButton {
+    transition: none;
+  }
+}

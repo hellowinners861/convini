@@ -47,3 +47,4 @@ export type {
   GoldenRouteDecision,
   GoldenRouteFingerprint,
 } from "./endings";
+export * from "./presentationAssets";

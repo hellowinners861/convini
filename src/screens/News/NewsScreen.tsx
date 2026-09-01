@@ -1,24 +1,8 @@
 import { canAdvanceAfterNews, getCommittedNewsSelections } from "../../engine";
-import type { GameState, NewsRole } from "../../domain";
 import { getTask5NewsArticle } from "../../content";
+import type { GameState } from "../../domain";
 import { ScreenFrame } from "../../components/ScreenFrame";
-import styles from "../Task3/Task3Screens.module.css";
-
-const NEWS_ROLE_LABELS: Record<NewsRole, string> = {
-  direct: "直接影響",
-  trend: "傾向",
-  discrepancy: "矛盾",
-  local: "ローカル",
-};
-
-const NEWS_UI = {
-  eyebrow: "SMARTPHONE NEWS",
-  heading: "勤務後のニュース",
-  description: "通知の見出しを手がかりに、三件の記事をすべて開く。",
-  listLabel: "今日のニュース",
-  openActionPrefix: "記事を開く",
-  readActionPrefix: "既読",
-} as const;
+import styles from "./NewsScreen.module.css";
 
 interface NewsScreenProps {
   game: GameState;
@@ -29,65 +13,87 @@ interface NewsScreenProps {
 
 export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenProps) {
   const selections = getCommittedNewsSelections(game);
-  const readCount = selections.filter((selection) => game.readNews.includes(selection.newsId)).length;
   const articles = selections.map((selection) => getTask5NewsArticle(selection.newsId));
-  const nextAction = game.day === 5 ? "結末を見る" : `Day ${game.day + 1}へ進む`;
+  const readCount = selections.filter((selection) => game.readNews.includes(selection.newsId)).length;
+  const allRead = selections.length > 0 && readCount === selections.length;
+  const advanceName = game.day === 5 ? "結末を見る" : `Day ${game.day + 1}へ進む`;
 
   return (
     <ScreenFrame
-      eyebrow={["DAY", game.day, "/", NEWS_UI.eyebrow].join(" ")}
-      heading={NEWS_UI.heading}
-      description={NEWS_UI.description}
+      eyebrow={`DAY ${game.day} / NIGHT FEED`}
+      heading="勤務後のニュース"
+      description="レジに残った記録と、街から届いた通知を読み返す。"
     >
-      <div className={styles.content}>
-        <p className={styles.status} role="status" aria-live="polite">
-          開封済み: {readCount} / 3
-        </p>
-        <ul className={styles.newsList} aria-label={NEWS_UI.listLabel}>
-          {articles.map((article, index) => {
-            const isRead = game.readNews.includes(article.id);
-            const isOpen = openNewsId === article.id;
-            const actionLabel = isRead
-              ? [NEWS_UI.readActionPrefix, article.headline].join(": ")
-              : [NEWS_UI.openActionPrefix, article.notificationHeadline].join(": ");
-            return (
-              <li key={article.id}>
-                <article className={styles.newsCard} aria-labelledby={`${article.id}-heading`}>
-                  <span className={styles.newsMeta}>
-                    NEWS {index + 1} / {article.role}（{NEWS_ROLE_LABELS[article.role]}）
-                  </span>
-                  <h2 id={`${article.id}-heading`}>
-                    {isOpen || isRead ? article.headline : article.notificationHeadline}
+      <div className={styles.newsLayout}>
+        <section className={styles.phone} aria-label="ニュースを読むスマートフォン">
+          <div className={styles.phoneNotch} aria-hidden="true" />
+          <div className={styles.phoneStatusBar} aria-hidden="true">
+            <span>00:47</span>
+            <span>▰ ◒ ▪</span>
+          </div>
+          <div className={styles.phoneAppBar}>
+            <span className={styles.phoneBrand}>NIGHT FEED</span>
+            <span className={styles.phoneSignal}>受信中</span>
+          </div>
+          <div className={styles.phoneFeed}>
+            {articles.map((article, index) => {
+              const isRead = game.readNews.includes(article.id);
+              const isOpen = openNewsId === article.id;
+              const showAuthoredArticle = isOpen || isRead;
+
+              return (
+                <article
+                  className={`${styles.article} ${isOpen ? styles.articleOpen : ""}`}
+                  key={article.id}
+                  aria-labelledby={`news-article-${index}`}
+                >
+                  <div className={styles.articleMeta}>
+                    <span>通知 {String(index + 1).padStart(2, "0")}</span>
+                    {isRead ? <span>既読</span> : <span>新着</span>}
+                  </div>
+                  <h2 id={`news-article-${index}`}>
+                    {showAuthoredArticle ? article.headline : article.notificationHeadline}
                   </h2>
+                  {showAuthoredArticle ? (
+                    <p className={styles.articleBody}>{article.body}</p>
+                  ) : null}
                   <button
-                    className={styles.buttonSecondary}
+                    className={styles.readButton}
                     type="button"
+                    aria-expanded={showAuthoredArticle}
                     disabled={isRead}
-                    aria-expanded={isOpen || isRead}
                     onClick={() => onRead(article.id)}
                   >
-                    {actionLabel}
+                    {isRead
+                      ? `既読: ${article.headline}`
+                      : `記事を開く: ${article.notificationHeadline}`}
                   </button>
-                  {isOpen || isRead ? (
-                    <div>
-                      <p>{article.body}</p>
-                    </div>
-                  ) : null}
                 </article>
-              </li>
-            );
-          })}
-        </ul>
-        <div className={styles.actions}>
+              );
+            })}
+          </div>
+          <div className={styles.phoneHomeIndicator} aria-hidden="true" />
+        </section>
+
+        <aside className={styles.newsControls} aria-label="ニュースの進行状況">
+          <div className={styles.progressCard}>
+            <p className={styles.controlLabel}>SHIFT LOG</p>
+            <p className={styles.progressValue} role="status">
+              開封済み: {readCount} / {articles.length}
+            </p>
+            <p className={styles.progressHint}>
+              {allRead ? "すべての通知を確認しました。" : "未読の通知があります。"}
+            </p>
+          </div>
           <button
-            className={styles.button}
+            className={styles.advanceButton}
             type="button"
             disabled={!canAdvanceAfterNews(game)}
             onClick={onAdvance}
           >
-            {nextAction}
+            {advanceName}
           </button>
-        </div>
+        </aside>
       </div>
     </ScreenFrame>
   );

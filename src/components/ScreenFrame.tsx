@@ -17,7 +17,7 @@ export function ScreenFrame({ eyebrow, heading, description, toolbar, children }
 
   return (
     <main className={styles.shell}>
-      <div className={styles.paper}>
+      <div className={styles.frame}>
         <header className={styles.header}>
           <div>
             <p className={styles.eyebrow}>{eyebrow}</p>

@@ -1,35 +1,48 @@
-:root {
-  color: var(--paper);
-  background: var(--night);
-  font-family: var(--font-body);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-}
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  min-width: 280px;
-  background: var(--night);
+  min-width: 320px;
+  background: var(--night-deep);
+  font-size: 16px;
 }
 
 body {
-  min-width: 280px;
-  min-height: 100vh;
+  min-width: 320px;
+  min-height: 100svh;
   margin: 0;
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
 }
 
 button,
-a {
-  -webkit-tap-highlight-color: transparent;
+input,
+select,
+textarea {
+  font: inherit;
 }
 
 button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--amber);
-  outline-offset: 4px;
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::selection {
+  background: rgb(239 191 119 / 35%);
+  color: var(--paper);
 }
 
 @media (prefers-reduced-motion: reduce) {

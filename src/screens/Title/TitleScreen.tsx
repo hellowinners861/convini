@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { APP_TITLE, PLAYABLE_MVP_NOTICE } from "../../app/appMeta";
+import { APP_TITLE } from "../../app/appMeta";
 import styles from "./TitleScreen.module.css";
 
 interface TitleScreenProps {
@@ -17,7 +17,7 @@ export function TitleScreen({
   notice,
   error,
 }: TitleScreenProps) {
-  const [isMvpReady, setIsMvpReady] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const [isNewRunConfirmationOpen, setIsNewRunConfirmationOpen] = useState(false);
 
   function startNewRun() {
@@ -25,13 +25,13 @@ export function TitleScreen({
       setIsNewRunConfirmationOpen(true);
       return;
     }
-    setIsMvpReady(true);
+    setHasStarted(true);
     onStart?.();
   }
 
   function confirmNewRun() {
     setIsNewRunConfirmationOpen(false);
-    setIsMvpReady(true);
+    setHasStarted(true);
     onStart?.();
   }
 
@@ -50,7 +50,7 @@ export function TitleScreen({
         </div>
 
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>深夜営業 / 5日間MVPプレイ可能</p>
+          <p className={styles.eyebrow}>深夜営業 / 最終シフト</p>
           <h1 id="title-screen-heading" className={styles.title}>
             <span>最後の</span>
             <span>コンビニ</span>
@@ -59,10 +59,10 @@ export function TitleScreen({
             いつものレジに、見覚えのない商品が並びはじめる。
           </p>
 
-          <div className={styles.receipt} aria-label="プロジェクト情報">
-            <p>LAST CONVENIENCE</p>
-            <p>PLAYABLE MVP / 001</p>
-            <p>DOM + CSS MODULES</p>
+          <div className={styles.storeStatus} aria-label="店舗情報">
+            <p>OPEN ALL NIGHT</p>
+            <p>午前0時 — 06:00</p>
+            <p>街の灯りが消えるまで</p>
           </div>
 
           {hasSavedRun ? (
@@ -74,7 +74,7 @@ export function TitleScreen({
                 className={styles.startButton}
                 type="button"
                 onClick={startNewRun}
-                aria-describedby="mvp-status"
+                aria-describedby="title-status"
               >
                 はじめから
               </button>
@@ -84,7 +84,7 @@ export function TitleScreen({
               className={styles.startButton}
               type="button"
               onClick={startNewRun}
-              aria-describedby="mvp-status"
+              aria-describedby="title-status"
             >
               はじめから
             </button>
@@ -121,14 +121,14 @@ export function TitleScreen({
               {error}
             </p>
           ) : null}
-          <p id="mvp-status" className={styles.status} role="status" aria-live="polite">
-            {isMvpReady ? PLAYABLE_MVP_NOTICE : "「はじめから」で5日間MVPを開始できます"}
+          <p id="title-status" className={styles.status} role="status" aria-live="polite">
+            {hasStarted ? "夜勤の勤務を開始します" : "「はじめから」で夜勤を開始できます"}
           </p>
         </div>
       </section>
 
       <p className={styles.footer}>
-        {APP_TITLE} / PC BROWSER / JAPANESE
+        {APP_TITLE} / 深夜営業
       </p>
     </main>
   );

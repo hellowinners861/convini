@@ -4,92 +4,109 @@
   min-height: 100svh;
   place-items: center;
   overflow: hidden;
-  padding: var(--space-xl);
+  padding: clamp(var(--space-md), 4vw, var(--space-xl));
   color: var(--paper);
   background:
-    radial-gradient(circle at 72% 18%, rgb(200 231 212 / 12%), transparent 28rem),
-    linear-gradient(135deg, var(--night), var(--ink));
+    radial-gradient(circle at 72% 16%, rgb(177 244 205 / 12%), transparent 25rem),
+    linear-gradient(135deg, #07121a, #132631 58%, #080d14);
+}
+
+.shell::before,
+.shell::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
 }
 
 .shell::before {
-  position: absolute;
   inset: 0;
-  pointer-events: none;
-  content: "";
-  opacity: 0.42;
-  background-image: repeating-linear-gradient(
+  opacity: 0.38;
+  background: repeating-linear-gradient(
     0deg,
-    rgb(243 238 223 / 3%) 0,
-    rgb(243 238 223 / 3%) 1px,
-    transparent 1px,
-    transparent 4px
+    transparent 0,
+    transparent 3px,
+    rgb(177 244 205 / 4%) 3px,
+    rgb(177 244 205 / 4%) 4px
   );
+}
+
+.shell::after {
+  top: 8%;
+  right: 6%;
+  left: 6%;
+  height: 1px;
+  background: var(--fluorescent);
+  box-shadow: 0 0 2rem 0.35rem rgb(177 244 205 / 16%);
+  opacity: 0.58;
 }
 
 .lightBand {
   position: absolute;
-  top: 7vh;
-  left: 8vw;
-  width: 84vw;
-  height: 1px;
-  background: var(--fluorescent);
-  box-shadow: 0 0 32px 8px rgb(200 231 212 / 18%);
-  opacity: 0.65;
+  top: 16%;
+  right: 0;
+  left: 0;
+  height: 11rem;
+  opacity: 0.55;
+  background: linear-gradient(180deg, transparent, rgb(239 191 119 / 5%), transparent);
+  transform: skewY(-3deg);
 }
 
 .panel {
   position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(19rem, 0.9fr);
-  width: min(100%, 980px);
-  min-height: min(70vh, 620px);
+  grid-template-columns: minmax(0, 1.14fr) minmax(20rem, 0.86fr);
+  width: min(100%, 1100px);
+  min-height: min(74vh, 650px);
   overflow: hidden;
-  border: 1px solid rgb(243 238 223 / 18%);
-  background: rgb(13 21 32 / 76%);
-  box-shadow: 0 24px 70px rgb(0 0 0 / 25%);
+  border: 1px solid rgb(177 244 205 / 23%);
+  background: rgb(7 17 25 / 82%);
+  box-shadow: 0 2rem 5rem rgb(0 0 0 / 42%), inset 0 1px 0 rgb(255 255 255 / 5%);
 }
 
 .scene {
   position: relative;
   isolation: isolate;
-  min-height: 25rem;
+  min-height: 27rem;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgb(200 231 212 / 10%), transparent 40%),
-    linear-gradient(160deg, #202e3b, #101822 70%);
+    linear-gradient(180deg, rgb(177 244 205 / 9%), transparent 36%),
+    linear-gradient(155deg, #1d3942, #0a151e 74%);
 }
 
 .scene::before {
   position: absolute;
-  right: 10%;
+  right: 0;
   bottom: 0;
   left: 0;
-  height: 34%;
+  height: 40%;
   content: "";
-  background: linear-gradient(180deg, transparent, rgb(6 10 15 / 80%));
-  z-index: -1;
+  background: linear-gradient(180deg, transparent, rgb(3 8 12 / 88%));
 }
 
 .scene::after {
   position: absolute;
-  inset: 13% 10% auto;
-  height: 4px;
+  top: 12%;
+  right: 12%;
+  left: 9%;
+  height: 3px;
   content: "";
   background: var(--fluorescent);
-  box-shadow: 0 0 26px 7px rgb(200 231 212 / 20%);
-  opacity: 0.72;
+  box-shadow: 0 0 2rem 0.45rem rgb(177 244 205 / 22%);
+  opacity: 0.76;
 }
 
 .storefront {
   position: absolute;
-  top: 27%;
-  left: 14%;
+  top: 25%;
+  left: 12%;
   display: grid;
   gap: var(--space-xs);
-  width: 68%;
+  width: 72%;
   padding: var(--space-md);
-  border: 1px solid rgb(243 238 223 / 25%);
-  background: rgb(23 27 36 / 58%);
+  border: 1px solid rgb(243 238 223 / 28%);
+  background: linear-gradient(160deg, rgb(27 46 54 / 76%), rgb(8 17 25 / 68%));
+  box-shadow: 0 1.5rem 2rem rgb(0 0 0 / 24%);
   transform: skewY(-2deg);
 }
 
@@ -102,8 +119,9 @@
 
 .storefrontSign {
   color: var(--amber);
-  font-size: clamp(1.3rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
   font-weight: 700;
+  text-shadow: 0 0 1.5rem rgb(239 191 119 / 34%);
 }
 
 .storefrontSubsign {
@@ -113,36 +131,39 @@
 
 .windowGlow {
   position: absolute;
-  top: 45%;
-  left: 21%;
-  width: 48%;
-  height: 22%;
-  border: 2px solid rgb(200 231 212 / 35%);
-  background: linear-gradient(120deg, rgb(231 182 106 / 22%), rgb(200 231 212 / 10%));
-  box-shadow: inset 0 0 22px rgb(200 231 212 / 12%);
+  top: 43%;
+  left: 18%;
+  width: 55%;
+  height: 25%;
+  border: 2px solid rgb(177 244 205 / 35%);
+  background:
+    linear-gradient(120deg, rgb(239 191 119 / 23%), rgb(177 244 205 / 10%)),
+    repeating-linear-gradient(90deg, transparent 0 2.2rem, rgb(177 244 205 / 12%) 2.2rem 2.3rem);
+  box-shadow: inset 0 0 2rem rgb(177 244 205 / 14%);
   transform: skewY(-2deg);
 }
 
 .counter {
   position: absolute;
-  right: 0;
-  bottom: 18%;
-  left: 8%;
-  height: 12%;
-  border-top: 2px solid rgb(231 182 106 / 45%);
-  background: linear-gradient(180deg, rgb(23 27 36 / 18%), rgb(0 0 0 / 48%));
+  right: -3%;
+  bottom: 17%;
+  left: 5%;
+  height: 13%;
+  border-top: 2px solid rgb(239 191 119 / 52%);
+  background: linear-gradient(180deg, rgb(27 46 54 / 22%), rgb(0 0 0 / 58%));
+  box-shadow: 0 0.7rem 0 rgb(0 0 0 / 18%);
   transform: perspective(280px) rotateX(9deg);
 }
 
 .receiptStack {
   position: absolute;
-  right: 18%;
-  bottom: 24%;
-  width: 16%;
-  height: 12%;
-  border: 1px solid rgb(243 238 223 / 50%);
+  right: 16%;
+  bottom: 23%;
+  width: 15%;
+  height: 13%;
+  border: 1px solid rgb(243 238 223 / 57%);
   background: var(--paper);
-  box-shadow: 8px -7px 0 rgb(243 238 223 / 76%);
+  box-shadow: 0.5rem -0.55rem 0 rgb(243 238 223 / 76%), 0 0.5rem 1rem rgb(0 0 0 / 25%);
   transform: rotate(5deg);
 }
 
@@ -152,8 +173,8 @@
   align-items: flex-start;
   justify-content: center;
   padding: clamp(var(--space-lg), 5vw, var(--space-2xl));
-  background: var(--paper);
-  color: var(--ink);
+  background: linear-gradient(145deg, rgb(14 31 39 / 98%), rgb(6 16 24 / 99%));
+  color: var(--paper);
 }
 
 .eyebrow,
@@ -164,213 +185,163 @@
 }
 
 .eyebrow {
-  color: #546156;
-  font-size: 0.73rem;
-  font-weight: 700;
+  color: var(--fluorescent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
 }
 
 .title {
   display: grid;
-  gap: 0.04em;
-  margin: var(--space-md) 0;
-  font-size: clamp(2.75rem, 7vw, 5.8rem);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.96;
+  margin: var(--space-lg) 0 0;
+  color: var(--paper);
+  font-size: clamp(3rem, 7vw, 5.8rem);
+  letter-spacing: -0.1em;
+  line-height: 0.94;
+  text-shadow: 0 0 2rem rgb(177 244 205 / 12%);
 }
 
 .title span:last-child {
-  color: #395649;
+  color: var(--amber);
 }
 
 .lede {
-  max-width: 25rem;
-  margin: 0;
-  color: #4e4a40;
-  font-size: 1rem;
-  line-height: 1.8;
+  max-width: 22rem;
+  margin: var(--space-lg) 0 0;
+  color: var(--muted);
+  line-height: 1.9;
 }
 
-.receipt {
+.storeStatus {
   display: grid;
-  gap: 0.3rem;
-  width: min(100%, 18rem);
-  margin: var(--space-lg) 0;
-  padding: var(--space-md);
-  border-block: 1px dashed rgb(23 27 36 / 40%);
-  color: #5b5a51;
+  gap: 0.2rem;
+  width: min(100%, 20rem);
+  margin-top: var(--space-xl);
+  border-left: 2px solid var(--amber);
+  padding: 0.65rem 0.8rem;
+  background: rgb(177 244 205 / 5%);
+  color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.67rem;
-  line-height: 1.4;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
 }
 
-.receipt p {
+.storeStatus p {
   margin: 0;
 }
 
-.startButton {
-  min-width: 10rem;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-sm);
-  padding: 0.8rem 1.25rem;
-  background: var(--ink);
-  color: var(--paper);
-  cursor: pointer;
-  font: inherit;
-  font-weight: 700;
-  transition:
-    background var(--motion-fast) ease,
-    color var(--motion-fast) ease,
-    transform var(--motion-fast) ease;
+.storeStatus p:first-child {
+  color: var(--fluorescent);
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
+  margin-top: var(--space-xl);
 }
 
+.startButton,
 .continueButton,
 .confirmButton,
 .cancelButton {
-  min-height: 2.8rem;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-sm);
-  padding: 0.8rem 1.25rem;
+  border: 1px solid rgb(177 244 205 / 34%);
+  padding: 0.8rem 1.1rem;
+  background: rgb(177 244 205 / 7%);
+  color: var(--paper);
   cursor: pointer;
   font: inherit;
   font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
-.continueButton {
-  background: transparent;
-  color: var(--ink);
+.startButton {
+  border-color: var(--amber);
+  background: linear-gradient(135deg, rgb(239 191 119 / 20%), rgb(239 191 119 / 7%));
+  color: var(--amber);
 }
 
-.confirmButton {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.cancelButton {
-  background: transparent;
-  color: var(--ink);
-}
-
+.startButton:hover,
+.startButton:focus-visible,
 .continueButton:hover,
 .continueButton:focus-visible,
+.confirmButton:hover,
+.confirmButton:focus-visible,
 .cancelButton:hover,
 .cancelButton:focus-visible {
-  background: rgb(57 86 73 / 12%);
-}
-
-.confirmButton:hover,
-.confirmButton:focus-visible {
-  background: #395649;
+  border-color: var(--fluorescent);
+  background: rgb(177 244 205 / 15%);
+  color: var(--fluorescent);
 }
 
 .confirmation {
-  width: min(100%, 25rem);
-  margin-top: var(--space-md);
-  border-left: 3px solid var(--amber);
+  width: min(100%, 27rem);
+  margin-top: var(--space-lg);
+  border: 1px solid rgb(239 191 119 / 33%);
   padding: var(--space-md);
-  background: rgb(231 182 106 / 14%);
+  background: rgb(239 191 119 / 7%);
 }
 
-.confirmation h2,
-.confirmation p {
-  margin-top: 0;
+.confirmation h2 {
+  margin: 0;
+  color: var(--paper);
+  font-size: 1rem;
 }
 
 .confirmation p {
-  margin-bottom: var(--space-md);
-  color: #4e4a40;
-  line-height: 1.6;
+  margin: var(--space-sm) 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.confirmation .actions {
+  margin-top: var(--space-md);
 }
 
 .notice,
-.error {
-  max-width: 28rem;
-  margin: var(--space-md) 0 0;
+.error,
+.status {
+  max-width: 30rem;
+  margin-top: var(--space-md);
+  color: var(--muted);
+  font-size: 0.78rem;
   line-height: 1.6;
 }
 
-.notice {
-  color: #395649;
-}
-
 .error {
-  color: #9e392b;
-}
-
-.startButton:hover {
-  background: #395649;
-  transform: translateY(-2px);
-}
-
-.startButton:active {
-  transform: translateY(0);
+  color: #ffb4a8;
 }
 
 .status {
-  min-height: 1.4rem;
-  margin-top: var(--space-sm);
-  color: #5b5a51;
-  font-size: 0.75rem;
-  line-height: 1.5;
+  color: var(--fluorescent);
+  font-family: var(--font-mono);
 }
 
 .footer {
-  position: absolute;
-  right: var(--space-xl);
-  bottom: var(--space-md);
-  color: rgb(243 238 223 / 60%);
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  margin-top: var(--space-md);
+  color: rgb(177 244 205 / 56%);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.62rem;
 }
 
-@media (max-width: 1099px) {
-  .panel {
-    grid-template-columns: 1fr;
-    width: min(100%, 680px);
-  }
-
-  .scene {
-    min-height: 16rem;
-  }
-
-  .storefront {
-    top: 20%;
-    left: 14%;
-    width: 58%;
-  }
-
-  .windowGlow {
-    top: 39%;
-    left: 20%;
-    width: 42%;
-    height: 27%;
-  }
-
-  .copy {
-    padding: var(--space-xl);
-  }
-}
-
-@media (max-width: 719px) {
+@media (max-width: 760px) {
   .shell {
     display: block;
-    min-height: 100svh;
     padding: var(--space-md);
   }
 
   .panel {
+    display: flex;
+    flex-direction: column;
     min-height: 0;
-    margin-bottom: var(--space-xl);
+    margin-top: 1.5rem;
   }
 
   .scene {
-    min-height: 12rem;
+    min-height: 15rem;
   }
 
   .copy {
@@ -378,37 +349,19 @@
   }
 
   .title {
-    font-size: clamp(2.6rem, 15vw, 4.2rem);
+    margin-top: var(--space-md);
   }
 
-  .startButton {
-    width: 100%;
-  }
-
-  .actions {
-    width: 100%;
-  }
-
-  .continueButton,
-  .confirmButton,
-  .cancelButton {
-    flex: 1 1 100%;
-  }
-
-  .footer {
-    position: static;
-    margin: 0 var(--space-xs);
-    font-size: 0.58rem;
+  .storeStatus {
+    margin-top: var(--space-lg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .startButton {
-    transition: none;
-  }
-
-  .startButton:hover,
-  .startButton:active {
+  .storefront,
+  .windowGlow,
+  .counter,
+  .receiptStack {
     transform: none;
   }
 }
