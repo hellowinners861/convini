@@ -84,7 +84,7 @@ function AppContent() {
   const statusLabel = saveStatusLabel(saveStatus);
 
   return (
-    <div className={styles.appShell} data-day={game.day}>
+    <div className={styles.appShell} data-day={game.day} data-theme="day">
       <header className={styles.appHeader}>
         <span>{APP_TITLE}</span>
         <div className={styles.appNotices} aria-live="polite">
@@ -140,7 +140,6 @@ function AppContent() {
               encounterNumber={state.encounterIndex + 1}
               encounterCount={game.resolvedQueue.length}
               onScan={() => dispatch({ type: "SCAN_ENCOUNTER" })}
-              onOpenDecision={() => dispatch({ type: "OPEN_DECISION" })}
               onDecision={(decision, recommendedItemId) => {
                 if (decision === "sell") {
                   dispatch({ type: "SELL" });

@@ -1,17 +1,17 @@
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --night: #07121a;
-  --night-deep: #040a10;
-  --ink: #e9f0eb;
-  --paper: #f3eedf;
-  --muted: #9eada8;
-  --fluorescent: #b1f4cd;
-  --amber: #efbf77;
-  --danger: #ffb4a8;
-  --line: rgb(177 244 205 / 18%);
-  --panel: #10232c;
-  --panel-raised: #172f38;
+  --night: #f4f1e8;
+  --night-deep: #e7ece8;
+  --ink: #173044;
+  --paper: #173044;
+  --muted: #5d6f78;
+  --fluorescent: #117552;
+  --amber: #b35c16;
+  --danger: #b42318;
+  --line: rgb(23 48 68 / 16%);
+  --panel: #edf3ef;
+  --panel-raised: #fffdf8;
 
   --font-body: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   --font-sans: var(--font-body);
@@ -23,4 +23,35 @@
   --space-lg: 1.5rem;
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
+}
+
+[data-theme="morning"] {
+  --page: #fff8e9;
+  --night: #fff8e9;
+  --night-deep: #f5ead1;
+}
+
+[data-theme="day"] {
+  --page: #f4f1e8;
+  --night: #f4f1e8;
+  --night-deep: #e7ece8;
+}
+
+[data-theme="evening"] {
+  --page: #f5eee9;
+  --night: #f5eee9;
+  --night-deep: #eaded7;
+}
+
+[data-theme="night"] {
+  --page: #edf1f3;
+  --night: #edf1f3;
+  --night-deep: #dfe8eb;
+}
+
+:root {
+  --page: #f4f1e8;
+  --surface: #fffdf8;
+  --surface-raised: #ffffff;
+  --shadow: 0 0.75rem 2rem rgb(23 48 68 / 10%);
 }

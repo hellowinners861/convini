@@ -60,7 +60,6 @@ interface EncounterScreenProps {
   encounterNumber: number;
   encounterCount: number;
   onScan: () => void;
-  onOpenDecision: () => void;
   onDecision: (decision: Decision, recommendedItemId?: string) => void;
   onNext: () => void;
 }
@@ -73,7 +72,6 @@ export function EncounterScreen({
   encounterNumber,
   encounterCount,
   onScan,
-  onOpenDecision,
   onDecision,
   onNext,
 }: EncounterScreenProps) {
@@ -230,7 +228,7 @@ export function EncounterScreen({
             <CustomerStage customerId={customer.id} name={customer.name} />
             <div className={styles.dialogue}>
               <p className={styles.dialogueLabel} id="customer-dialogue-heading">
-                今夜の来店者
+                今回の来店者
               </p>
               <p className={styles.dialogueText}>{resolveNarrative(encounter.intro, game)}</p>
             </div>
@@ -260,15 +258,6 @@ export function EncounterScreen({
                       {TASK4_ENCOUNTER_UI.scanAction}
                     </button>
                   ) : null}
-                  {phase.subPhase === "scan" ? (
-                    <button
-                      className={styles.buttonSecondary}
-                      type="button"
-                      onClick={onOpenDecision}
-                    >
-                      {TASK4_ENCOUNTER_UI.reviewScanAction}
-                    </button>
-                  ) : null}
                 </div>
               </section>
 
@@ -280,11 +269,9 @@ export function EncounterScreen({
                 <p className={styles.decisionStatus} role="status">
                   {phase.subPhase === "intro"
                     ? TASK4_ENCOUNTER_UI.scanRequired
-                    : phase.subPhase === "scan"
-                      ? TASK4_ENCOUNTER_UI.scanReviewed
-                      : phase.subPhase === "decision"
-                        ? TASK4_ENCOUNTER_UI.decisionAvailable
-                        : TASK4_ENCOUNTER_UI.decisionResolved}
+                    : phase.subPhase === "decision"
+                      ? TASK4_ENCOUNTER_UI.decisionAvailable
+                      : TASK4_ENCOUNTER_UI.decisionResolved}
                 </p>
                 <div className={styles.decisionGrid}>
                   <button
@@ -384,8 +371,7 @@ export function EncounterScreen({
                 <p className={styles.reactionText}>{resolvedResultCopy.result}</p>
               </div>
               <div className={styles.receipt} aria-label={TASK4_RECEIPT_UI.receiptLabel}>
-                <p>{resolvedResultCopy.receipt}</p>
-                <p>{TASK4_RECEIPT_UI.saleTotalLabel}: {basketTotal}円</p>
+                <p className={styles.receiptRecord}>{resolvedResultCopy.receipt}</p>
                 {soldItems.length > 0 ? (
                   <ul className={styles.soldItems} aria-label={TASK4_RECEIPT_UI.soldItemsLabel}>
                     {soldItems.map((item) => (
@@ -395,8 +381,11 @@ export function EncounterScreen({
                     ))}
                   </ul>
                 ) : null}
-                <p>{TASK4_RECEIPT_UI.dailyRevenueLabel}: {game.revenue.today}円</p>
-                <p>{resolvedResultCopy.readback}</p>
+                <div className={styles.resultStats}>
+                  <p>{TASK4_RECEIPT_UI.saleTotalLabel}: {basketTotal}円</p>
+                  <p>{TASK4_RECEIPT_UI.dailyRevenueLabel}: {game.revenue.today}円</p>
+                </div>
+                <p className={styles.resultReadback}>{resolvedResultCopy.readback}</p>
               </div>
               <button className={styles.button} type="button" onClick={onNext}>
                 {TASK4_ENCOUNTER_UI.nextEncounterAction}

@@ -55,3 +55,10 @@ a:focus:not(:focus-visible) {
     animation-iteration-count: 1 !important;
   }
 }
+
+html,
+body {
+  background: var(--page);
+  color: var(--ink);
+  color-scheme: light;
+}

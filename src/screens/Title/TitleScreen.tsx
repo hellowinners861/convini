@@ -36,13 +36,13 @@ export function TitleScreen({
   }
 
   return (
-    <main className={styles.shell}>
+    <main className={styles.shell} data-theme="day">
       <div className={styles.lightBand} aria-hidden="true" />
       <section className={styles.panel} aria-labelledby="title-screen-heading">
         <div className={styles.scene} aria-hidden="true">
           <div className={styles.storefront}>
             <span className={styles.storefrontSign}>CONVENI</span>
-            <span className={styles.storefrontSubsign}>OPEN LATE</span>
+            <span className={styles.storefrontSubsign}>OPEN FOR SERVICE</span>
           </div>
           <div className={styles.windowGlow} />
           <div className={styles.counter} />
@@ -50,7 +50,7 @@ export function TitleScreen({
         </div>
 
         <div className={styles.copy}>
-          <p className={styles.eyebrow}>深夜営業 / 最終シフト</p>
+          <p className={styles.eyebrow}>STORE SERVICE / CURRENT SHIFT</p>
           <h1 id="title-screen-heading" className={styles.title}>
             <span>最後の</span>
             <span>コンビニ</span>
@@ -60,8 +60,8 @@ export function TitleScreen({
           </p>
 
           <div className={styles.storeStatus} aria-label="店舗情報">
-            <p>OPEN ALL NIGHT</p>
-            <p>午前0時 — 06:00</p>
+            <p>STORE OPEN</p>
+            <p>CURRENT SHIFT</p>
             <p>街の灯りが消えるまで</p>
           </div>
 
@@ -122,13 +122,13 @@ export function TitleScreen({
             </p>
           ) : null}
           <p id="title-status" className={styles.status} role="status" aria-live="polite">
-            {hasStarted ? "夜勤の勤務を開始します" : "「はじめから」で夜勤を開始できます"}
+            {hasStarted ? "勤務を開始します" : "「はじめから」で勤務を開始できます"}
           </p>
         </div>
       </section>
 
       <p className={styles.footer}>
-        {APP_TITLE} / 深夜営業
+        {APP_TITLE} / STORE SERVICE
       </p>
     </main>
   );

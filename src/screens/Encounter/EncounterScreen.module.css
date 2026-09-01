@@ -467,3 +467,193 @@
     transform: none;
   }
 }
+
+.encounterViewport {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.viewportStatus {
+  color: var(--muted);
+}
+
+.viewportStatus span:last-child {
+  color: var(--fluorescent);
+}
+
+.itemPanel,
+.decisionPanel,
+.resultPanel {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface-raised);
+  box-shadow: var(--shadow);
+}
+
+.panelHeading h2,
+.dialogHeader h3,
+.resultHeader h2 {
+  color: var(--ink);
+}
+
+.panelIndex,
+.reactionLabel {
+  color: var(--amber);
+}
+
+.dialogue {
+  border-color: rgb(17 117 82 / 36%);
+  background: rgb(255 253 248 / 86%);
+}
+
+.dialogueLabel,
+.decisionStatus,
+.scanStatus {
+  color: var(--fluorescent);
+}
+
+.dialogueText,
+.reactionText,
+.receipt {
+  color: var(--ink);
+}
+
+.button,
+.buttonSecondary,
+.buttonWarning,
+.dialogCloseButton,
+.recommendationButton {
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.button {
+  border-color: rgb(17 117 82 / 42%);
+  background: #e8f5ee;
+  color: #0d6748;
+}
+
+.buttonSecondary {
+  border-color: rgb(179 92 22 / 42%);
+  background: #fff4df;
+  color: #994b0e;
+}
+
+.buttonWarning {
+  border-color: rgb(180 35 24 / 32%);
+  background: #fff0ed;
+  color: var(--danger);
+}
+
+.button:hover:not(:disabled),
+.button:focus-visible:not(:disabled),
+.buttonSecondary:hover:not(:disabled),
+.buttonSecondary:focus-visible:not(:disabled),
+.buttonWarning:hover:not(:disabled),
+.buttonWarning:focus-visible:not(:disabled),
+.dialogCloseButton:hover,
+.dialogCloseButton:focus-visible,
+.recommendationButton:hover,
+.recommendationButton:focus-visible {
+  border-color: var(--amber);
+  background: #fff0d1;
+  color: var(--ink);
+}
+
+.button:disabled,
+.buttonSecondary:disabled,
+.buttonWarning:disabled,
+.recommendationButton:disabled {
+  background: #f0f2ef;
+  color: #91a0a3;
+}
+
+.recommendationDialog {
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  box-shadow: 0 1rem 3rem rgb(23 48 68 / 22%);
+}
+
+.dialogBackdrop {
+  background: rgb(23 48 68 / 28%);
+}
+
+.recommendationProductName {
+  color: var(--amber);
+}
+
+.resultPanel {
+  min-height: 0;
+  align-content: start;
+  gap: 0.7rem;
+}
+
+.resultHeader {
+  border-bottom-color: var(--line);
+}
+
+.reaction {
+  border-left-color: var(--amber);
+}
+
+.receipt {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: #f5f8f4;
+  font-family: var(--font-body);
+  line-height: 1.45;
+}
+
+.receiptRecord,
+.resultReadback {
+  margin: 0;
+}
+
+.resultStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.resultStats p {
+  margin: 0;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.5rem;
+  background: var(--surface-raised);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.resultReadback {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.soldItems {
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (min-width: 720px) and (max-height: 1000px) {
+  .encounterViewport {
+    padding: 1rem 1.25rem 1.25rem;
+  }
+
+  .encounterGrid {
+    gap: 1rem;
+  }
+
+  .customerColumn,
+  .interactionColumn,
+  .resultPanel {
+    min-height: 0;
+  }
+
+  .resultPanel {
+    padding: 1rem;
+  }
+}

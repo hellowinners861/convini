@@ -47,9 +47,7 @@ export function currentTask5Encounter(state: AppState) {
 export const currentTask4Encounter = currentTask5Encounter;
 
 export function scanToDecision(state: AppState): AppState {
-  let next = gameReducer(state, { type: "SCAN_ENCOUNTER" });
-  next = gameReducer(next, { type: "OPEN_DECISION" });
-  return next;
+  return gameReducer(state, { type: "SCAN_ENCOUNTER" });
 }
 
 export function decideCurrentEncounter(

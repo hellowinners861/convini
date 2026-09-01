@@ -160,7 +160,6 @@ export async function startDayOne(page: Page): Promise<void> {
 
 export async function sellCurrentEncounter(page: Page): Promise<void> {
   await page.getByRole("button", { name: "スキャンする", exact: true }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認", exact: true }).click();
   await page.getByRole("button", { name: "売る", exact: true }).click();
   await expect(page.getByRole("region", { name: "レシート / 結果", exact: true })).toBeVisible();
 }

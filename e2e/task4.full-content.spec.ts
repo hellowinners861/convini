@@ -11,11 +11,14 @@ async function startDay(page: Page) {
   await expect(page.locator("[data-day]")).toHaveAttribute("data-day", "1");
 }
 
-async function scanReviewAndSell(page: Page) {
+async function scanAndSell(page: Page) {
   await page.getByRole("button", { name: "スキャンする" }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認" }).click();
   await page.getByRole("button", { name: "売る" }).click();
-  await expect(page.getByRole("heading", { name: "レシート / 結果" })).toBeVisible();
+  const resultHeading = page.getByRole("heading", { name: "レシート / 結果" });
+  const nextCustomer = page.getByRole("button", { name: "次の接客へ" });
+  await expect(resultHeading).toBeVisible();
+  await expect(resultHeading).toBeInViewport();
+  await expect(nextCustomer).toBeInViewport();
 }
 
 async function readNewsAndAdvance(page: Page, day: number) {
@@ -57,8 +60,6 @@ test("keeps decisions behind the scan gate", async ({ page }) => {
   const sell = page.getByRole("button", { name: "売る" });
   await expect(sell).toBeDisabled();
   await page.getByRole("button", { name: "スキャンする" }).click();
-  await expect(sell).toBeDisabled();
-  await page.getByRole("button", { name: "スキャン結果を確認" }).click();
   await expect(sell).toBeEnabled();
 });
 
@@ -73,21 +74,18 @@ test("supports filtered decision shortcuts and an accessible recommendation dial
   await expect(page.getByRole("dialog")).toHaveCount(0);
 
   await page.getByRole("button", { name: "スキャンする" }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認" }).click();
   await page.keyboard.press("1");
   await expect(page.getByRole("heading", { name: "レシート / 結果" })).toBeVisible();
 
   await page.getByRole("button", { name: "次の接客へ" }).click();
   await page.getByRole("button", { name: "スキャンする" }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認" }).click();
   await page.keyboard.press("2");
   await expect(page.getByText("今回の販売合計: 0円")).toBeVisible();
 
   await page.getByRole("button", { name: "次の接客へ" }).click();
-  await scanReviewAndSell(page);
+  await scanAndSell(page);
   await page.getByRole("button", { name: "次の接客へ" }).click();
   await page.getByRole("button", { name: "スキャンする" }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認" }).click();
   await page.keyboard.press("3");
 
   const dialog = page.getByRole("dialog", { name: "おすすめ商品" });
@@ -135,7 +133,7 @@ test("completes the Task 5 run with 29 receipts, 15 articles, ending, and run su
   for (const [dayIndex, encounterCount] of ENCOUNTER_COUNTS.entries()) {
     await expect(page.locator("[data-day]")).toHaveAttribute("data-day", String(dayIndex + 1));
     for (let encounterIndex = 0; encounterIndex < encounterCount; encounterIndex += 1) {
-      await scanReviewAndSell(page);
+      await scanAndSell(page);
       completedReceipts += 1;
       await page.getByRole("button", { name: "次の接客へ" }).click();
     }

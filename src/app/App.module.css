@@ -140,3 +140,36 @@
     padding: 0.4rem 0.5rem;
   }
 }
+
+.appShell,
+.statusScreen {
+  background: var(--page);
+  color: var(--ink);
+}
+
+.appHeader {
+  border-bottom: 1px solid var(--line);
+  background: rgb(255 253 248 / 94%);
+  color: var(--ink);
+  box-shadow: 0 0.35rem 1rem rgb(23 48 68 / 7%);
+}
+
+.appHeader > span,
+.appNotice,
+.saveStatus,
+.muteButton,
+.resetButton {
+  color: var(--ink);
+}
+
+.appNotice,
+.saveStatus,
+.muteButton,
+.resetButton {
+  border-color: var(--line);
+  background: var(--surface);
+}
+
+.appNotices {
+  color: var(--fluorescent);
+}

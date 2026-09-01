@@ -93,7 +93,6 @@ export type AppAction =
   | { type: "CONTINUE_RUN" }
   | { type: "BEGIN_DAY" }
   | { type: "SCAN_ENCOUNTER" }
-  | { type: "OPEN_DECISION" }
   | { type: "SELL" }
   | { type: "REFUSE" }
   | { type: "RECOMMEND"; recommendedItemId: string }
@@ -1250,7 +1249,7 @@ function clonePersistedPhase(phase: PersistedGamePhase): GamePhase {
     case "encounter":
       return {
         kind: "encounter",
-        subPhase: phase.subPhase,
+        subPhase: phase.subPhase === "scan" ? "decision" : phase.subPhase,
         encounterId: phase.encounterId,
         slotId: phase.slotId,
       };
@@ -1681,16 +1680,6 @@ export function gameReducer(state: AppState, action: AppAction): AppState {
         !state.game ||
         state.game.phase.kind !== "encounter" ||
         state.game.phase.subPhase !== "intro"
-      ) {
-        return rejected(state);
-      }
-      return { ...state, game: withEncounterPhase(state.game, state.encounterIndex, "scan") };
-    case "OPEN_DECISION":
-      if (
-        state.view !== "encounter" ||
-        !state.game ||
-        state.game.phase.kind !== "encounter" ||
-        state.game.phase.subPhase !== "scan"
       ) {
         return rejected(state);
       }

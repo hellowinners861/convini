@@ -34,7 +34,6 @@ test("restores an encounter result checkpoint and resumes the next encounter", a
   const firstEncounterHeading = await page.getByRole("heading", { level: 1 }).innerText();
 
   await page.getByRole("button", { name: "スキャンする", exact: true }).click();
-  await page.getByRole("button", { name: "スキャン結果を確認", exact: true }).click();
   await page.getByRole("button", { name: "売る", exact: true }).click();
   const receipt = await page
     .getByRole("region", { name: "レシート / 結果", exact: true })

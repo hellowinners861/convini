@@ -231,3 +231,64 @@
     grid-template-columns: 1fr;
   }
 }
+
+.content,
+.panel,
+.articleCard,
+.timelineItem {
+  color: var(--ink);
+}
+
+.panel,
+.articleCard,
+.timelineItem {
+  border-color: var(--line);
+  background: var(--surface-raised);
+  box-shadow: 0 0.5rem 1.25rem rgb(23 48 68 / 7%);
+}
+
+.panel h2,
+.panel h3,
+.statValue,
+.metaGrid dd {
+  color: var(--ink);
+}
+
+.prose,
+.metaGrid dt,
+.statLabel,
+.list {
+  color: var(--muted);
+}
+
+.status,
+.buttonSecondary,
+.recommendationProductName {
+  color: var(--fluorescent);
+}
+
+.button,
+.buttonSecondary,
+.buttonWarning,
+.recommendationButton,
+.dialogCloseButton {
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.receipt {
+  border-color: var(--line);
+  background: #f5f8f4;
+  color: var(--ink);
+}
+
+.dialogBackdrop {
+  background: rgb(23 48 68 / 28%);
+}
+
+.recommendationDialog {
+  border-color: var(--line);
+  background: var(--surface-raised);
+  box-shadow: 0 1rem 3rem rgb(23 48 68 / 22%);
+}

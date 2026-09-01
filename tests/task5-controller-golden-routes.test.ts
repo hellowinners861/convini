@@ -69,7 +69,6 @@ function executeReducerRoute(
       }
 
       state = dispatch(state, { type: "SCAN_ENCOUNTER" });
-      state = dispatch(state, { type: "OPEN_DECISION" });
       state = dispatch(state, { type: "RECOMMEND", recommendedItemId });
       state = dispatch(state, { type: "NEXT_ENCOUNTER" });
     }
@@ -93,7 +92,6 @@ function executeReducerAllRefusal(): AppState {
     state = dispatch(state, { type: "BEGIN_DAY" });
     while (state.view === "encounter") {
       state = dispatch(state, { type: "SCAN_ENCOUNTER" });
-      state = dispatch(state, { type: "OPEN_DECISION" });
       state = dispatch(state, { type: "REFUSE" });
       state = dispatch(state, { type: "NEXT_ENCOUNTER" });
     }
@@ -235,7 +233,6 @@ describe("Task 5 controller golden routes", () => {
     state = dispatch(state, { type: "BEGIN_DAY" });
     while (state.view === "encounter") {
       state = dispatch(state, { type: "SCAN_ENCOUNTER" });
-      state = dispatch(state, { type: "OPEN_DECISION" });
       state = dispatch(state, { type: "SELL" });
       state = dispatch(state, { type: "NEXT_ENCOUNTER" });
     }

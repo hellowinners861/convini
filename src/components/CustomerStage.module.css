@@ -166,3 +166,50 @@
     min-height: 12rem;
   }
 }
+
+.portrait {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #e4f2ec, #d4e5e7);
+  box-shadow: inset 0 -2.5rem 3rem rgb(23 48 68 / 8%);
+}
+
+.portrait::after {
+  background: linear-gradient(180deg, transparent, rgb(23 48 68 / 18%));
+}
+
+.halo {
+  background: radial-gradient(circle, rgb(243 173 79 / 28%), transparent 68%);
+}
+
+.head {
+  background: linear-gradient(135deg, #f2bd91, #c98464);
+}
+
+.hair {
+  background: #3b4850;
+}
+
+.shoulders {
+  background: linear-gradient(135deg, #3c8076, #23515a 72%);
+}
+
+.coat {
+  background: rgb(243 173 79 / 78%);
+}
+
+.badge {
+  background: rgb(255 255 255 / 70%);
+}
+
+.caption {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
+.captionLabel {
+  color: var(--fluorescent);
+}
+
+.caption strong {
+  color: var(--ink);
+}

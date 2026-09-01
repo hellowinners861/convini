@@ -3,23 +3,28 @@
   min-height: 100svh;
   place-items: center;
   padding: var(--space-xl);
-  color: var(--paper);
-  background: var(--night);
+  color: var(--ink);
+  background: var(--page);
 }
 
 .panel {
   width: min(100%, 38rem);
-  border: 1px solid rgb(243 238 223 / 24%);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
   padding: var(--space-xl);
-  background: rgb(13 21 32 / 86%);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow);
 }
 
 .panel h1 {
   margin: var(--space-sm) 0 var(--space-md);
+  color: var(--ink);
 }
 
 .panel p {
   line-height: 1.7;
+  color: var(--muted);
 }
 
 .eyebrow {
@@ -31,16 +36,16 @@
 }
 
 .error {
-  color: #ffb4a8;
+  color: var(--danger);
 }
 
 .panel button {
   min-height: 2.8rem;
-  border: 1px solid var(--paper);
+  border: 1px solid rgb(17 117 82 / 42%);
   border-radius: var(--radius-sm);
   padding: 0.7rem 1rem;
-  background: var(--paper);
-  color: var(--ink);
+  background: #e8f5ee;
+  color: #0d6748;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -50,6 +55,7 @@
 .panel button:focus-visible {
   border-color: var(--amber);
   background: var(--amber);
+  color: var(--ink);
 }
 
 @media (max-width: 719px) {

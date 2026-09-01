@@ -2,11 +2,9 @@
 export const TASK3_ENCOUNTER_UI = {
   decisionHeading: "選択",
   scanRequired: "先に商品をスキャンしてください。",
-  scanReviewed: "スキャン結果を確認すると選択できます。",
   decisionAvailable: "決定は一度だけです。",
   decisionResolved: "この接客は確定しました。",
   scanAction: "スキャンする",
-  reviewScanAction: "スキャン結果を確認",
   sellAction: "売る",
   refuseAction: "断る",
   recommendAction: "おすすめする",

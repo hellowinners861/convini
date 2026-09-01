@@ -365,3 +365,102 @@
     transform: none;
   }
 }
+
+.shell {
+  color: var(--ink);
+  background: var(--page);
+}
+
+.panel,
+.copy {
+  border-color: var(--line);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.scene {
+  background: linear-gradient(145deg, #e5f2eb, #d9e9ec);
+}
+
+.scene::before {
+  background: linear-gradient(180deg, transparent, rgb(23 48 68 / 14%));
+}
+
+.scene::after {
+  background: var(--fluorescent);
+}
+
+.storefront {
+  background: linear-gradient(160deg, rgb(255 255 255 / 84%), rgb(214 232 223 / 88%));
+}
+
+.storefrontSign {
+  color: var(--amber);
+}
+
+.storefrontSubsign,
+.eyebrow,
+.status,
+.storeStatus p:first-child {
+  color: var(--fluorescent);
+}
+
+.windowGlow {
+  background: linear-gradient(90deg, rgb(255 248 216 / 84%), rgb(255 255 255 / 20%));
+}
+
+.counter {
+  background: linear-gradient(180deg, rgb(255 255 255 / 72%), rgb(23 48 68 / 22%));
+}
+
+.receiptStack {
+  background: #fffdf8;
+}
+
+.title,
+.title span:last-child,
+.copy h1,
+.storeStatus p {
+  color: var(--ink);
+}
+
+.lede,
+.footer,
+.storeStatus,
+.notice {
+  color: var(--muted);
+}
+
+.storeStatus {
+  border-color: var(--line);
+  background: #f5f8f4;
+}
+
+.startButton,
+.continueButton,
+.confirmButton,
+.cancelButton {
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.startButton {
+  border-color: rgb(17 117 82 / 42%);
+  background: #e8f5ee;
+  color: #0d6748;
+}
+
+.startButton:hover,
+.startButton:focus-visible,
+.continueButton:hover,
+.continueButton:focus-visible,
+.confirmButton:hover,
+.confirmButton:focus-visible,
+.cancelButton:hover,
+.cancelButton:focus-visible {
+  border-color: var(--amber);
+  background: #fff0d1;
+  color: var(--ink);
+}

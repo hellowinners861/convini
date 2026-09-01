@@ -263,7 +263,6 @@ describe("T6-C React persistence orchestration", () => {
     const afterBegin = storage.setCalls.filter((key) => key === RUN_STORAGE_KEY).length;
     expect(afterBegin).toBe(initialWrites + 1);
     fireEvent.click(screen.getByRole("button", { name: "スキャンする" }));
-    fireEvent.click(screen.getByRole("button", { name: "スキャン結果を確認" }));
     const beforeDecision = storage.setCalls.length;
     fireEvent.click(screen.getByRole("button", { name: "売る" }));
     expect(storage.setCalls.length).toBe(beforeDecision + 1);
@@ -281,7 +280,6 @@ describe("T6-C React persistence orchestration", () => {
     const encounterCount = 5;
     for (let index = 0; index < encounterCount; index += 1) {
       fireEvent.click(screen.getByRole("button", { name: "スキャンする" }));
-      fireEvent.click(screen.getByRole("button", { name: "スキャン結果を確認" }));
       fireEvent.click(screen.getByRole("button", { name: "売る" }));
       fireEvent.click(screen.getByRole("button", { name: "次の接客へ" }));
     }
@@ -313,7 +311,6 @@ describe("T6-C React persistence orchestration", () => {
     fireEvent.click(screen.getByRole("button", { name: "勤務を始める" }));
     for (let index = 0; index < 5; index += 1) {
       fireEvent.click(screen.getByRole("button", { name: "スキャンする" }));
-      fireEvent.click(screen.getByRole("button", { name: "スキャン結果を確認" }));
       fireEvent.click(screen.getByRole("button", { name: "売る" }));
       fireEvent.click(screen.getByRole("button", { name: "次の接客へ" }));
     }

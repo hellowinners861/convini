@@ -91,7 +91,7 @@ describe("T6-B persistence controller", () => {
     expect(run.resolvedQueue).not.toContain("tamper");
   });
 
-  it("CONTINUE_RUN reconstructs encounter intro, scan, and decision phases", () => {
+  it("CONTINUE_RUN reconstructs encounter intro and decision phases", () => {
     const states = [
       beginTask4Day(startTask4Run("continue-intro")),
       scanToDecision(beginTask4Day(startTask4Run("continue-scan"))),
@@ -123,6 +123,21 @@ describe("T6-B persistence controller", () => {
       expect(title.encounterIndex).toBe(0);
       expect(title.result).toBeNull();
     }
+  });
+
+  it("normalizes a legacy persisted scan phase to decision without mutating the input", () => {
+    const source = beginTask4Day(startTask4Run("legacy-scan"));
+    const run = persisted(source);
+    if (run.phase.kind !== "encounter") {
+      throw new Error("legacy scan fixture is missing an encounter phase");
+    }
+    run.phase.subPhase = "scan";
+    const before = structuredClone(run);
+
+    const restored = restoreAppStateFromRun(run);
+
+    expect(restored?.game?.phase).toMatchObject({ kind: "encounter", subPhase: "decision" });
+    expect(run).toEqual(before);
   });
 
   it("restores an encounter result and NEXT_ENCOUNTER uses durable queue", () => {

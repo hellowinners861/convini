@@ -175,3 +175,50 @@
     min-height: 11rem;
   }
 }
+
+.productArt {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, #fff8e6, #e7f1ed);
+  box-shadow: inset 0 -2.5rem 3rem rgb(23 48 68 / 7%);
+}
+
+.productArt::before {
+  opacity: 0.4;
+}
+
+.productArt::after {
+  background: var(--amber);
+}
+
+.glow {
+  background: radial-gradient(circle, rgb(243 173 79 / 30%), transparent 68%);
+}
+
+.package {
+  background: linear-gradient(145deg, #fffaf0, #d6e8de);
+  border-color: rgb(23 48 68 / 20%);
+  box-shadow: 0 0.6rem 1.25rem rgb(23 48 68 / 14%);
+}
+
+.packageTop {
+  background: #2b5f62;
+}
+
+.packageBand {
+  background: #f3ad4f;
+}
+
+.packageMark,
+.packageBarcode,
+.caption,
+.caption strong {
+  color: var(--ink);
+}
+
+.captionLabel {
+  color: var(--fluorescent);
+}
+
+.price {
+  color: var(--amber);
+}

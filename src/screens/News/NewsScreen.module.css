@@ -271,3 +271,84 @@
     transition: none;
   }
 }
+
+.newsLayout {
+  color: var(--ink);
+}
+
+.phone {
+  border-color: rgb(23 48 68 / 22%);
+  background: #f9fbf8;
+  box-shadow: 0 1rem 2.5rem rgb(23 48 68 / 14%);
+}
+
+.phoneNotch {
+  background: #173044;
+}
+
+.phoneNotch::after {
+  background: #b9e6d0;
+}
+
+.phoneStatusBar,
+.phoneAppBar {
+  color: var(--muted);
+}
+
+.phoneAppBar {
+  background: #e8f3ed;
+}
+
+.phoneBrand,
+.article h2,
+.progressValue {
+  color: var(--ink);
+}
+
+.phoneSignal,
+.articleMeta,
+.controlLabel {
+  color: var(--fluorescent);
+}
+
+.article,
+.articleOpen,
+.progressCard {
+  border-color: var(--line);
+  background: var(--surface-raised);
+  box-shadow: 0 0.35rem 1rem rgb(23 48 68 / 7%);
+}
+
+.articleOpen {
+  background: #fff8e8;
+}
+
+.articleBody,
+.notificationBody,
+.progressHint {
+  color: var(--muted);
+}
+
+.articleBody {
+  color: var(--ink);
+}
+
+.readButton,
+.advanceButton {
+  border-color: rgb(17 117 82 / 34%);
+  background: #e8f5ee;
+  color: #0d6748;
+}
+
+.readButton:hover:not(:disabled),
+.readButton:focus-visible:not(:disabled),
+.advanceButton:hover:not(:disabled),
+.advanceButton:focus-visible:not(:disabled) {
+  border-color: var(--amber);
+  background: #fff0d1;
+  color: var(--ink);
+}
+
+.phoneHomeIndicator {
+  background: rgb(23 48 68 / 35%);
+}

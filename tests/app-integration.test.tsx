@@ -45,13 +45,12 @@ function startDay() {
   fireEvent.click(screen.getByRole("button", { name: "勤務を始める" }));
 }
 
-function scanAndReview() {
+function scanEncounter() {
   fireEvent.click(screen.getByRole("button", { name: "スキャンする" }));
-  fireEvent.click(screen.getByRole("button", { name: "スキャン結果を確認" }));
 }
 
 function sellCurrentEncounter() {
-  scanAndReview();
+  scanEncounter();
   fireEvent.click(screen.getByRole("button", { name: "売る" }));
 }
 
@@ -81,7 +80,7 @@ function readCurrentNews() {
 }
 
 describe("Task 5 React vertical slice", () => {
-  it("starts on the authored Day 1 briefing and keeps selling behind scan review", () => {
+  it("starts on the authored Day 1 briefing and keeps selling behind the scan gate", () => {
     renderApp();
     startDay();
 
@@ -90,8 +89,6 @@ describe("Task 5 React vertical slice", () => {
     expect((sellButton as HTMLButtonElement).disabled).toBe(true);
 
     fireEvent.click(screen.getByRole("button", { name: "スキャンする" }));
-    expect((sellButton as HTMLButtonElement).disabled).toBe(true);
-    fireEvent.click(screen.getByRole("button", { name: "スキャン結果を確認" }));
     expect((sellButton as HTMLButtonElement).disabled).toBe(false);
     fireEvent.click(sellButton);
 
@@ -116,7 +113,7 @@ describe("Task 5 React vertical slice", () => {
     }
 
     expect(screen.getByRole("heading", { name: "早川 誠" })).toBeTruthy();
-    scanAndReview();
+    scanEncounter();
     fireEvent.click(screen.getByRole("button", { name: "おすすめする" }));
 
     const hayakawa = getTask5Encounter("d1_hayakawa_first");
@@ -158,7 +155,7 @@ describe("Task 5 React vertical slice", () => {
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(screen.queryByRole("heading", { name: "レシート / 結果" })).toBeNull();
 
-    scanAndReview();
+    scanEncounter();
     const editable = document.createElement("input");
     document.body.appendChild(editable);
     fireEvent.keyDown(editable, { key: "1" });
@@ -181,7 +178,7 @@ describe("Task 5 React vertical slice", () => {
     expect(screen.getByRole("heading", { name: "レシート / 結果" })).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: "次の接客へ" }));
-    scanAndReview();
+    scanEncounter();
     fireEvent.keyDown(document, { key: "2" });
     expect(screen.getByRole("heading", { name: "レシート / 結果" })).toBeTruthy();
     expect(screen.getByText("今回の販売合計: 0円")).toBeTruthy();
@@ -189,7 +186,7 @@ describe("Task 5 React vertical slice", () => {
     fireEvent.click(screen.getByRole("button", { name: "次の接客へ" }));
     sellCurrentEncounter();
     fireEvent.click(screen.getByRole("button", { name: "次の接客へ" }));
-    scanAndReview();
+    scanEncounter();
     fireEvent.keyDown(document, { key: "3" });
 
     const dialog = screen.getByRole("dialog", { name: "おすすめ商品" });

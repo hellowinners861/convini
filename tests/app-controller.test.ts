@@ -177,11 +177,11 @@ describe("Task 4 game controller", () => {
     const begun = beginTask4Day(started);
 
     expect(gameReducer(begun, { type: "SELL" })).toBe(begun);
-    expect(gameReducer(begun, { type: "OPEN_DECISION" })).toBe(begun);
+    expect(gameReducer(begun, { type: "REFUSE" })).toBe(begun);
+    expect(gameReducer(begun, { type: "RECOMMEND", recommendedItemId: "mask" })).toBe(begun);
 
     const scanned = gameReducer(begun, { type: "SCAN_ENCOUNTER" });
-    expect(gameReducer(scanned, { type: "SELL" })).toBe(scanned);
-    const decision = gameReducer(scanned, { type: "OPEN_DECISION" });
+    const decision = scanned;
     expect(gameOf(decision).phase).toMatchObject({ kind: "encounter", subPhase: "decision" });
 
     const invalidRecommendation = gameReducer(decision, {
