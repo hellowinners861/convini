@@ -3,6 +3,8 @@ import { TASK5_NEWS_SELECTED_TOTAL } from "../../content/news/contracts";
 import type { GameState } from "../../domain";
 import type { EndingResultState } from "../../app/gameController";
 import { ScreenFrame } from "../../components/ScreenFrame";
+import { CONNECTION_EPILOGUES, witnessFlag } from "../../content/connections";
+import { TASK5_CONTENT } from "../../content";
 import styles from "../Task3/Task3Screens.module.css";
 
 interface RunSummaryScreenProps {
@@ -22,6 +24,20 @@ export function RunSummaryScreen({ game, endingResult, onReset, onNext }: RunSum
         <section className={styles.panel} aria-labelledby="run-summary-narrative-heading">
           <h2 id="run-summary-narrative-heading">この夜の記録</h2>
           <p className={styles.prose}>{runSummary}</p>
+        </section>
+
+        {CONNECTION_EPILOGUES.filter((entry) => game.flags.includes(entry.flag)).map((entry) => (
+          <section className={styles.panel} key={entry.flag}>
+            <h2>{entry.title}</h2><p className={styles.prose}>{entry.body}</p>
+          </section>
+        ))}
+        <section className={styles.panel}>
+          <h2>紙の記録を持つ人</h2>
+          <p className={styles.prose}>
+            {TASK5_CONTENT.customers.filter((customer) => game.flags.includes(witnessFlag(customer.id)))
+              .map((customer) => customer.name).join("、") || "今夜、レシートを渡した常連はいなかった。"}
+          </p>
+          <p className={styles.prose}>次の勤務では、いつもと違うひとことを聞いてみよう。同じ商品にも、まだ知らない使い道がある。</p>
         </section>
 
         <dl className={styles.metaGrid} aria-label="周回の記録">

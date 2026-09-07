@@ -90,7 +90,7 @@ describe("Task 4 public catalog", () => {
     expect(TASK4_CONTENT.customers.filter((customer) => customer.role === "staff")).toHaveLength(1);
     expect(TASK4_CONTENT.customers.filter((customer) => customer.role === "incidental")).toHaveLength(3);
     expect(TASK4_CONTENT.encounters).toHaveLength(29);
-    expect(TASK4_CONTENT.recommendationPairs).toHaveLength(8);
+    expect(TASK4_CONTENT.recommendationPairs).toHaveLength(11);
     expect(TASK4_CONTENT.dayPlans.map((plan) => plan.slots.length)).toEqual([5, 6, 6, 6, 6]);
     expect(TASK4_CONTENT.dayPlans.reduce((total, plan) => total + plan.slots.length, 0)).toBe(29);
     expect(TASK4_CONTENT.day5Convergence).toEqual({
@@ -104,7 +104,7 @@ describe("Task 4 public catalog", () => {
       items: 20,
       customers: 10,
       encounters: 29,
-      recommendationPairs: 8,
+      recommendationPairs: 11,
       dayPlans: 5,
       slots: 29,
     });
@@ -311,7 +311,7 @@ describe("Task 5 aggregate catalog", () => {
       items: 20,
       customers: 10,
       encounters: 29,
-      recommendationPairs: 8,
+      recommendationPairs: 11,
       dayPlans: 5,
       slots: 29,
       news: 30,

@@ -3,6 +3,7 @@ import { validateRecommendationPairs } from "../../engine";
 import { TASK4_CUSTOMERS } from "../customers/catalog";
 import { coexistReplacementPairOutcome, runawayReplacementPairOutcome } from "../config/outcomes";
 import { TASK4_ABNORMAL_ITEMS } from "../items/abnormal";
+import { CONTEXT_RECOMMENDATION_PAIRS } from "./contextPairs";
 
 type PairKind = "coexist" | "runaway";
 
@@ -159,7 +160,11 @@ const AXIS_PAIR_SPECS: AxisPairSpec[] = [
   },
 ];
 
-export const TASK4_RECOMMENDATION_PAIRS: RecommendationPair[] = AXIS_PAIR_SPECS.map(buildPair);
+export const BASE_RECOMMENDATION_PAIRS: RecommendationPair[] = AXIS_PAIR_SPECS.map(buildPair);
+export const TASK4_RECOMMENDATION_PAIRS: RecommendationPair[] = [
+  ...BASE_RECOMMENDATION_PAIRS,
+  ...CONTEXT_RECOMMENDATION_PAIRS,
+];
 
 for (const pair of TASK4_RECOMMENDATION_PAIRS) {
   RecommendationPairSchema.parse(pair);

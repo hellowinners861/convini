@@ -57,6 +57,7 @@ export function TitleScreen({
           </h1>
           <p className={styles.lede}>
             いつものレジに、見覚えのない商品が並びはじめる。
+            何を売るか、何を聞くか。そのひとことが、誰かの明日を変える。
           </p>
 
           <div className={styles.storeStatus} aria-label="店舗情報">

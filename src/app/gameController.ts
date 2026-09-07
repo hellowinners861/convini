@@ -3,6 +3,7 @@ import {
   canAdvanceAfterNews,
   commitNewsSelections,
   determineEnding,
+  evaluateCondition,
   readNewsArticle,
   resolveEncounterQueue,
   resolveRecommendation,
@@ -40,6 +41,7 @@ import {
   validateTask5Content,
   type AuthoredEncounter,
 } from "../content";
+import { receiptFlag, witnessFlag } from "../content/connections";
 
 export type AppView =
   | "title"
@@ -93,6 +95,8 @@ export type AppAction =
   | { type: "CONTINUE_RUN" }
   | { type: "BEGIN_DAY" }
   | { type: "SCAN_ENCOUNTER" }
+  | { type: "ASK_QUESTION"; questionId: string }
+  | { type: "HAND_RECEIPT" }
   | { type: "SELL" }
   | { type: "REFUSE" }
   | { type: "RECOMMEND"; recommendedItemId: string }
@@ -1684,6 +1688,32 @@ export function gameReducer(state: AppState, action: AppAction): AppState {
         return rejected(state);
       }
       return { ...state, game: withEncounterPhase(state.game, state.encounterIndex, "decision") };
+    case "ASK_QUESTION": {
+      const encounter = currentEncounter(state);
+      if (!state.game || state.view !== "encounter" || state.game.phase.kind !== "encounter" ||
+          !["intro", "decision"].includes(state.game.phase.subPhase) || !encounter) return state;
+      const questions = encounter.questions ?? [];
+      if (questions.some((question) => state.game?.flags.includes(question.id))) return state;
+      const question = questions.find((candidate) => candidate.id === action.questionId);
+      if (!question || !evaluateCondition(question.conditions, state.game)) return state;
+      return { ...state, game: applyOutcome(state.game, {
+        id: question.id,
+        effects: [{ kind: "setFlag", id: question.id }, ...question.effects],
+      }) };
+    }
+    case "HAND_RECEIPT": {
+      const encounter = currentEncounter(state);
+      const result = currentEncounterResult(state);
+      if (!state.game || state.view !== "encounter" || state.game.phase.kind !== "encounter" ||
+          state.game.phase.subPhase !== "result" || !encounter?.receiptReply ||
+          !result || result.decision === "refuse" || state.game.flags.includes(receiptFlag(encounter.id))) return state;
+      return { ...state, game: applyOutcome(state.game, {
+        id: receiptFlag(encounter.id), effects: [
+          { kind: "setFlag", id: receiptFlag(encounter.id) },
+          { kind: "setFlag", id: witnessFlag(encounter.customerId) },
+        ],
+      }) };
+    }
     case "SELL":
       return resolveEncounterDecision(state, "sell");
     case "REFUSE":

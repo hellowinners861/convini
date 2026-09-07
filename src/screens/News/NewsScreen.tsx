@@ -2,6 +2,7 @@ import { canAdvanceAfterNews, getCommittedNewsSelections } from "../../engine";
 import { getTask5NewsArticle } from "../../content";
 import type { GameState } from "../../domain";
 import { ScreenFrame } from "../../components/ScreenFrame";
+import { CONNECTION_UPDATES } from "../../content/connections";
 import styles from "./NewsScreen.module.css";
 
 interface NewsScreenProps {
@@ -55,7 +56,10 @@ export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenPr
                     {showAuthoredArticle ? article.headline : article.notificationHeadline}
                   </h2>
                   {showAuthoredArticle ? (
-                    <p className={styles.articleBody}>{article.body}</p>
+                    <>
+                      <p className={styles.savedNotification}>保存していた通知：{article.notificationHeadline}</p>
+                      <p className={styles.articleBody}>{article.body}</p>
+                    </>
                   ) : null}
                   <button
                     className={styles.readButton}
@@ -76,6 +80,12 @@ export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenPr
         </section>
 
         <aside className={styles.newsControls} aria-label="ニュースの進行状況">
+          {CONNECTION_UPDATES.filter((update) => update.day === game.day && game.flags.includes(update.flag)).map((update) => (
+            <section className={styles.personalMessage} key={update.flag}>
+              <p className={styles.controlLabel}>街の人から</p>
+              <h2>{update.sender}</h2><p>{update.text}</p>
+            </section>
+          ))}
           <div className={styles.progressCard}>
             <p className={styles.controlLabel}>SHIFT LOG</p>
             <p className={styles.progressValue} role="status">

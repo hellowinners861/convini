@@ -4,7 +4,7 @@ import { getTask5Encounter, getTask5Item, TASK5_NEWS } from "../src/content";
 const ENCOUNTER_COUNTS = [5, 6, 6, 6, 6] as const;
 
 async function startDay(page: Page) {
-  await page.goto("/");
+  await page.goto("/convini/");
   await page.getByRole("button", { name: "はじめから" }).click();
   await expect(page.getByRole("heading", { name: "いつもの夜に、見慣れない商品" })).toBeVisible();
   await page.getByRole("button", { name: "勤務を始める" }).click();
