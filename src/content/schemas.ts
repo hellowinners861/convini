@@ -181,6 +181,14 @@ export const AuthoredEncounterSchema: z.ZodType<AuthoredEncounter> = z
     scan: NarrativeSchema,
     recommendationOptions: z.array(RecommendationOptionSchema).min(1),
     outcomes: EncounterOutcomeSetSchema,
+    questions: z.array(z.object({
+      id: ContentIdSchema,
+      label: NonEmptyTextSchema,
+      reply: NonEmptyTextSchema,
+      conditions: ConditionSchema,
+      effects: z.array(EffectSchema),
+    }).strict()).optional(),
+    receiptReply: NarrativeSchema.optional(),
   })
   .strict();
 

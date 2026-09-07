@@ -496,13 +496,13 @@ function checkRecommendationSemantics(
               "] abnormal encounter must have exactly two recommendation options",
           );
         }
-        if (matches.length !== 1) {
+        if (matches.filter((pair) => isUnconditionalCondition(pair.conditions)).length !== 1) {
           issues.push(
             "encounters[" +
               encounterIndex +
               "].recommendationOptions[" +
               optionIndex +
-              "] must match exactly one global recommendation pair; received " +
+              "] must match exactly one unconditional global recommendation pair; received " +
               matches.length,
           );
         }
@@ -597,9 +597,9 @@ function checkPlansAndDays(content: AuthoredContent, issues: string[]): void {
   if (content.encounters.length !== 29) {
     issues.push("expected exactly 29 encounters; received " + content.encounters.length);
   }
-  if (content.recommendationPairs.length !== 8) {
+  if (content.recommendationPairs.length !== 11) {
     issues.push(
-      "expected exactly 8 recommendation pairs; received " + content.recommendationPairs.length,
+      "expected exactly 11 recommendation pairs; received " + content.recommendationPairs.length,
     );
   }
 
@@ -799,6 +799,7 @@ function collectSemanticIssues(content: AuthoredContent): string[] {
   checkUniqueIds(content.items, "item", issues);
   checkUniqueIds(content.customers, "customer", issues);
   checkUniqueIds(content.encounters, "encounter", issues);
+  checkUniqueIds(content.encounters.flatMap((encounter) => encounter.questions ?? []), "question", issues);
   checkUniqueIds(content.recommendationPairs, "recommendation pair", issues);
 
   const itemIds = new Set(content.items.map((item) => item.id));
@@ -1451,6 +1452,13 @@ function checkTask7SemanticReferences(
     const day = registry.encounterDays[encounter.id];
     visitTask7Narrative(encounter.intro, `encounters[${encounterIndex}].intro`, registry, issues, day);
     visitTask7Narrative(encounter.scan, `encounters[${encounterIndex}].scan`, registry, issues, day);
+    for (const [questionIndex, question] of (encounter.questions ?? []).entries()) {
+      visitTask7Condition(question.conditions, `encounters[${encounterIndex}].questions[${questionIndex}].conditions`, registry, issues, day);
+      checkOutcome({ id: question.id, effects: question.effects }, `question ${question.id}`, new Set(registry.customerIds), issues);
+    }
+    if (encounter.receiptReply) {
+      visitTask7Narrative(encounter.receiptReply, `encounters[${encounterIndex}].receiptReply`, registry, issues, day);
+    }
     for (const [optionIndex, option] of encounter.recommendationOptions.entries()) {
       for (const [copyName, narrative] of Object.entries(option.resultCopy)) {
         visitTask7Narrative(

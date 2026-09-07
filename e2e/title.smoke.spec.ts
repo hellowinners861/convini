@@ -2,7 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("title screen boots and has no axe violations", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/convini/");
 
   await expect(page).toHaveTitle("最後のコンビニ");
   await expect(

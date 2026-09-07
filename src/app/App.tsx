@@ -8,6 +8,7 @@ import { ShiftSummaryScreen } from "../screens/Summary/ShiftSummaryScreen";
 import { PersistenceRecoveryScreen } from "../screens/Persistence/PersistenceRecoveryScreen";
 import { TitleScreen } from "../screens/Title/TitleScreen";
 import { APP_TITLE } from "./appMeta";
+import { ShiftNotebook } from "../components/ShiftNotebook";
 import { reconstructEncounterResult, reconstructEndingResult } from "./gameController";
 import {
   GameProvider,
@@ -118,6 +119,7 @@ function AppContent() {
           </button>
         </div>
       </header>
+      <ShiftNotebook game={game} />
 
       {state.view === "briefing" ? (
         <BriefingScreen game={game} onBegin={() => dispatch({ type: "BEGIN_DAY" })} />
@@ -140,6 +142,8 @@ function AppContent() {
               encounterNumber={state.encounterIndex + 1}
               encounterCount={game.resolvedQueue.length}
               onScan={() => dispatch({ type: "SCAN_ENCOUNTER" })}
+              onAsk={(questionId) => dispatch({ type: "ASK_QUESTION", questionId })}
+              onHandReceipt={() => dispatch({ type: "HAND_RECEIPT" })}
               onDecision={(decision, recommendedItemId) => {
                 if (decision === "sell") {
                   dispatch({ type: "SELL" });

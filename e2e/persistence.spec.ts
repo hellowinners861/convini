@@ -186,7 +186,7 @@ test("restores runSummary and starts round two while keeping histories exactly o
 });
 
 test("blocks Continue for corrupt run JSON and explicitly clears only the run key", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/convini/");
   await expect(page.getByRole("heading", { name: /^最後の\s*コンビニ$/ })).toBeVisible();
   await writeRaw(page, STORAGE_KEYS.run, "{not valid JSON");
   await writeJson(page, STORAGE_KEYS.meta, ARCHIVED_META);

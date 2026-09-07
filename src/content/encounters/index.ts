@@ -1,4 +1,5 @@
 import type { AuthoredEncounter } from "../types";
+import { attachConnections } from "../connections";
 import { TASK4_DAY1_ENCOUNTERS } from "./day1";
 import { TASK4_DAY2_ENCOUNTERS } from "./day2";
 import { TASK4_DAY3_ENCOUNTERS } from "./day3";
@@ -18,5 +19,5 @@ export const TASK4_ENCOUNTERS: AuthoredEncounter[] = [
   ...TASK4_DAY3_ENCOUNTERS,
   ...TASK4_DAY4_ENCOUNTERS,
   ...TASK4_DAY5_ENCOUNTERS,
-];
+].map(attachConnections);
 export const TASK4_ENCOUNTER_CATALOG = TASK4_ENCOUNTERS;

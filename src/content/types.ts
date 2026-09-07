@@ -2,6 +2,7 @@ import type {
   Condition,
   Day,
   DayEncounterPlan,
+  Effect,
   Outcome,
   RecommendationPair,
   WorldAxis,
@@ -90,6 +91,17 @@ export interface AuthoredEncounter {
   scan: Narrative;
   recommendationOptions: RecommendationOption[];
   outcomes: EncounterOutcomeSet;
+  /** Optional additions preserve existing saves and the original sales routes. */
+  questions?: EncounterQuestion[];
+  receiptReply?: Narrative;
+}
+
+export interface EncounterQuestion {
+  id: ContentId;
+  label: string;
+  reply: string;
+  conditions: Condition;
+  effects: Effect[];
 }
 
 export interface BriefingPresentation {

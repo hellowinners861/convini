@@ -2,6 +2,20 @@
   padding: clamp(var(--space-md), 3vw, var(--space-xl));
 }
 
+.questionPanel { padding: 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.questionLabel { margin: 0; font-size: .78rem; font-weight: 800; color: var(--fluorescent); }
+.questionHint { margin: .5rem 0; color: var(--muted); font-size: .8rem; line-height: 1.6; }
+.questionButton { display: block; width: 100%; margin-top: .6rem; border: 1px solid var(--line); border-radius: 4px; padding: .8rem; background: #edf3ef; text-align: left; color: var(--ink); font: inherit; font-size: .88rem; line-height: 1.5; cursor: pointer; }
+.questionButton:hover { border-color: var(--fluorescent); background: #e1eee6; }
+.questionButton:focus-visible { outline: 3px solid var(--fluorescent); outline-offset: 3px; }
+.questionReply p { margin: .65rem 0; font-size: .9rem; line-height: 1.85; }
+.questionReply .askedLabel { font-size: .78rem; color: var(--muted); }
+.questionReply small { color: var(--muted); font-size: .72rem; }
+.connectionEcho { padding: .8rem 0 0 .9rem; border-left: 3px solid var(--fluorescent); color: var(--ink); font-size: .9rem; line-height: 1.85; }
+.receiptHandoff { display: grid; gap: .5rem; margin: 1rem 0; padding: 1rem; background: #edf3ef; border-radius: 5px; }
+.receiptHandoff p { margin: 0; font-size: .88rem; line-height: 1.8; }
+.receiptHandoff small { color: var(--muted); font-size: .75rem; }
+
 .viewportStatus {
   display: flex;
   align-items: center;

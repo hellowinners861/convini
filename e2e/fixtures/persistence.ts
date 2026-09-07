@@ -144,7 +144,7 @@ export async function clearOwnedStorage(page: Page): Promise<void> {
 }
 
 export async function openFreshTitle(page: Page): Promise<void> {
-  await page.goto("/");
+  await page.goto("/convini/");
   await expect(page.getByRole("heading", { name: /^最後の\s*コンビニ$/ })).toBeVisible();
 }
 

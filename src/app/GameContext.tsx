@@ -109,6 +109,8 @@ function isCheckpointAction(action: AppAction): boolean {
     case "SELL":
     case "REFUSE":
     case "RECOMMEND":
+    case "ASK_QUESTION":
+    case "HAND_RECEIPT":
     case "OPEN_NEWS":
     case "READ_NEWS":
     case "ADVANCE_DAY":

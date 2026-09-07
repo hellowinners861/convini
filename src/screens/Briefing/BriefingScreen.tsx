@@ -1,6 +1,7 @@
 import { getTask4DayPlan, resolveNarrative, TASK4_BRIEFING_UI } from "../../content";
 import type { GameState } from "../../domain";
 import { ScreenFrame } from "../../components/ScreenFrame";
+import { CONNECTION_HINTS } from "../../content/connections";
 import styles from "../Task3/Task3Screens.module.css";
 
 interface BriefingScreenProps {
@@ -26,6 +27,7 @@ export function BriefingScreen({ game, onBegin }: BriefingScreenProps) {
               <li key={item}>{item}</li>
             ))}
           </ul>
+          <p className={styles.prose}>{CONNECTION_HINTS[game.day]}</p>
         </section>
         <dl className={styles.metaGrid} aria-label="勤務情報">
           <div>

@@ -3,7 +3,7 @@ import { applyOutcome, resolveRecommendation, validateRecommendationPairs } from
 import { RecommendationPairSchema, type Effect, type GameState } from "../src/domain";
 import { TASK4_CUSTOMERS } from "../src/content/customers/catalog";
 import { TASK4_ABNORMAL_ITEMS } from "../src/content/items/abnormal";
-import { TASK4_RECOMMENDATION_PAIRS } from "../src/content/pairs/axisPairs";
+import { BASE_RECOMMENDATION_PAIRS as TASK4_RECOMMENDATION_PAIRS } from "../src/content/pairs/axisPairs";
 import { makeState } from "./fixtures/state";
 
 const expectedPairs = [

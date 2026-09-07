@@ -12,6 +12,9 @@ import type { Decision, EncounterResultState } from "../../app/gameController";
 import { CustomerStage } from "../../components/CustomerStage";
 import { ItemStage } from "../../components/ItemStage";
 import { ScreenFrame } from "../../components/ScreenFrame";
+import { connectionEcho, receiptFlag } from "../../content/connections";
+import { CONTEXT_RESULT_COPY } from "../../content/pairs/contextPairs";
+import { evaluateCondition } from "../../engine";
 import styles from "./EncounterScreen.module.css";
 
 type EncounterPhase = Extract<GamePhase, { kind: "encounter" }>;
@@ -62,6 +65,8 @@ interface EncounterScreenProps {
   onScan: () => void;
   onDecision: (decision: Decision, recommendedItemId?: string) => void;
   onNext: () => void;
+  onAsk: (questionId: string) => void;
+  onHandReceipt: () => void;
 }
 
 export function EncounterScreen({
@@ -74,6 +79,8 @@ export function EncounterScreen({
   onScan,
   onDecision,
   onNext,
+  onAsk,
+  onHandReceipt,
 }: EncounterScreenProps) {
   const [recommendationOpen, setRecommendationOpen] = useState(false);
   const recommendationTriggerRef = useRef<HTMLButtonElement>(null);
@@ -81,6 +88,11 @@ export function EncounterScreen({
   const restoreRecommendationFocusRef = useRef(false);
   const customer = getTask4Customer(encounter.customerId);
   const requestedItem = getTask4Item(encounter.requestedItemId);
+  const questions = encounter.questions ?? [];
+  const askedQuestion = questions.find((question) => game.flags.includes(question.id));
+  const availableQuestions = questions.filter((question) => evaluateCondition(question.conditions, game));
+  const echo = connectionEcho(encounter, game);
+  const handedReceipt = game.flags.includes(receiptFlag(encounter.id));
 
   useEffect(() => {
     setRecommendationOpen(false);
@@ -202,6 +214,7 @@ export function EncounterScreen({
         result: resolveNarrative(resultCopy.result, game),
         readback: resolveNarrative(resultCopy.readback, game),
         receipt: resolveNarrative(resultCopy.receipt, game),
+        ...(result ? CONTEXT_RESULT_COPY[result.outcomeId] : undefined),
       }
     : undefined;
   const soldItems =
@@ -231,7 +244,28 @@ export function EncounterScreen({
                 今回の来店者
               </p>
               <p className={styles.dialogueText}>{resolveNarrative(encounter.intro, game)}</p>
+              {echo ? <p className={styles.connectionEcho}>{echo}</p> : null}
             </div>
+            {availableQuestions.length > 0 ? (
+              <section className={styles.questionPanel} aria-label="ひとつ聞く">
+                <p className={styles.questionLabel}>ひとつ聞く</p>
+                {askedQuestion ? (
+                  <div className={styles.questionReply} role="status">
+                    <p className={styles.askedLabel}>あなた「{askedQuestion.label}」</p>
+                    <p>{askedQuestion.reply}</p>
+                    <small>接客ノートに記録しました</small>
+                  </div>
+                ) : !resultShown ? (
+                  <>
+                    <p className={styles.questionHint}>会計の前に、気になることをひとつ。</p>
+                    {availableQuestions.map((question) => (
+                      <button key={question.id} className={styles.questionButton} type="button"
+                        onClick={() => onAsk(question.id)}>{question.label}</button>
+                    ))}
+                  </>
+                ) : <p className={styles.questionHint}>この接客では、話を聞かなかった。</p>}
+              </section>
+            ) : null}
           </section>
 
           {!resultShown ? (
@@ -387,6 +421,21 @@ export function EncounterScreen({
                 </div>
                 <p className={styles.resultReadback}>{resolvedResultCopy.readback}</p>
               </div>
+              {encounter.receiptReply && result?.decision !== "refuse" ? (
+                <div className={styles.receiptHandoff}>
+                  {handedReceipt ? (
+                    <p role="status">{resolveNarrative(encounter.receiptReply, game)}</p>
+                  ) : (
+                    <>
+                      <p>レシートはご入用ですか？</p>
+                      <button className={styles.buttonSecondary} type="button" onClick={onHandReceipt}>
+                        レシートも渡す
+                      </button>
+                      <small>会計の控えは接客ノートに残ります。</small>
+                    </>
+                  )}
+                </div>
+              ) : null}
               <button className={styles.button} type="button" onClick={onNext}>
                 {TASK4_ENCOUNTER_UI.nextEncounterAction}
               </button>

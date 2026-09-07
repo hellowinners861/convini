@@ -231,6 +231,18 @@ export function buildSemanticReferenceRegistry(content: Task5Content): SemanticR
   );
   const flags = new Set<string>();
 
+  // Optional conversations and handed receipts are also producers of durable flags.
+  for (const encounter of content.encounters) {
+    for (const question of encounter.questions ?? []) {
+      flags.add(question.id);
+      collectEffects(question.effects, flags, customerStateSets);
+    }
+    if (encounter.receiptReply) {
+      flags.add(`receipt_${encounter.id}`);
+      flags.add(`receipt_witness_${encounter.customerId}`);
+    }
+  }
+
   addEncounterOutcomeEffects(content, flags, customerStateSets);
   addRecommendationEffects(content, flags, customerStateSets);
   addNewsEffects(content, flags, customerStateSets);

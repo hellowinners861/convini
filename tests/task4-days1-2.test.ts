@@ -293,7 +293,8 @@ describe("CONTENT-004D Day 1 and Day 2 authored content", () => {
       for (const option of encounter.recommendationOptions) {
         const matches = TASK4_RECOMMENDATION_PAIRS.filter(
           (pair) =>
-            pair.customerId === encounter.customerId &&
+            "true" in pair.conditions &&
+              pair.customerId === encounter.customerId &&
             pair.requestedItemId === encounter.requestedItemId &&
             pair.recommendedItemId === option.itemId,
         );
