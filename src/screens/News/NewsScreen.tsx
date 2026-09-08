@@ -39,7 +39,7 @@ export function NewsScreen({ game, openNewsId, onRead, onAdvance, onNightAction 
             <span className={styles.phoneBrand}>NIGHT FEED</span>
             <span className={styles.phoneSignal}>受信中</span>
           </div>
-          <div className={styles.phoneFeed}>
+          <div className={styles.phoneFeed} tabIndex={0} role="region" aria-label="ニュース一覧">
             {articles.map((article, index) => {
               const isRead = game.readNews.includes(article.id);
               const isOpen = openNewsId === article.id;

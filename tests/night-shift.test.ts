@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { gameReducer, initialAppState, restoreAppStateFromRun, validateRunForResume, type AppAction, type AppState } from "../src/app/gameController";
 import { getTask5Encounter, TASK5_CONTENT_VERSION } from "../src/content";
 import { COUNTER_MOMENTS, NIGHT_FLAGS, QUIET_NIGHTS } from "../src/content/nightShift";
+import { CONNECTION_FLAGS } from "../src/content/connections";
 import { EffectSchema } from "../src/domain";
 import { counterMoment, evidenceLinks, evidenceReply, inspectedSpot, nightEncounterLines, nightEpilogues, nightReceiptNotes, powerAvailable, recommendationUnavailable } from "../src/engine/nightShift";
 
@@ -141,6 +142,26 @@ describe("night-shift authored interactions", () => {
     const later = at("d4_mew_arrivals", hospital);
     expect(recommendationUnavailable(game(later), "d4_mew_arrivals", "mobile_power_bank")).toBeNull();
     expect(step(later, { type: "RECOMMEND", recommendedItemId: "mobile_power_bank" }).result).toBeTruthy();
+  });
+
+  it("recognizes a sold unit in older V1 saves without the inventory flag", () => {
+    const sold = step(at("d3_mew_return"), { type: "RECOMMEND", recommendedItemId: "mobile_power_bank" });
+    const legacy = { ...game(sold), flags: game(sold).flags.filter((flag) => !flag.startsWith("night:")) };
+    expect(validateRunForResume(legacy)).toBe(true);
+    expect(powerAvailable(legacy)).toBe(false);
+  });
+
+  it("preserves the existing hospital delivery story when both repair promises are made", () => {
+    let state = at("d2_hako3_first");
+    state = step(state, { type: "RECOMMEND", recommendedItemId: "shojo_manga" });
+    state = at("d3_hako3_return", state);
+    state = step(state, { type: "ASK_QUESTION", questionId: CONNECTION_FLAGS.repairQuestion });
+    expect(game(state).flags).toContain(CONNECTION_FLAGS.repairQuestion);
+    state = choice(state, "repair-purpose", "ask");
+    state = step(state, { type: "RECOMMEND", recommendedItemId: "precision_screwdriver" });
+    expect(game(state).flags).toContain(CONNECTION_FLAGS.delivery);
+    expect(game(state).flags).toContain(NIGHT_FLAGS.repaired);
+    expect(validateRunForResume(game(state))).toBe(true);
   });
 
   it("does not deliver or charge for reserved power when the hospital sale is refused", () => {

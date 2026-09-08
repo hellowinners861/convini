@@ -496,6 +496,12 @@
   line-height: 1.8;
 }
 
+.questionPanel { grid-column: 1 / -1; }
+.resultHeader h2 { scroll-margin-top: 6rem; }
+@media (max-width: 719px) {
+  .resultHeader h2 { scroll-margin-top: 9rem; }
+}
+
 .viewportStatus {
   color: var(--muted);
 }

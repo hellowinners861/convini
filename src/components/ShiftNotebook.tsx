@@ -1,4 +1,6 @@
-import { TASK5_CONTENT, getTask5Customer, getTask5Item } from "../content";
+import { TASK5_CONTENT, getTask5Customer, getTask5Item, resolveNarrative } from "../content";
+import { COUNTER_MOMENTS, NIGHT_FLAGS } from "../content/nightShift";
+import { inspectedSpot, selectedCounterChoice } from "../engine/nightShift";
 import { CONNECTION_EPILOGUES, receiptFlag, witnessFlag } from "../content/connections";
 import type { GameState } from "../domain";
 import styles from "./ShiftNotebook.module.css";
@@ -55,15 +57,33 @@ export function ShiftNotebook({ game }: { game: GameState }) {
             const extra = typeof event.data.recommendedItemId === "string" ? getTask5Item(event.data.recommendedItemId) : null;
             const refused = event.data.decision === "refuse";
             const handed = game.flags.includes(receiptFlag(String(event.data.encounterId)));
+            const hospitalPower = !refused && event.data.encounterId === "d4_miyashita_triage" && game.flags.includes(NIGHT_FLAGS.powerHospital);
             return (
               <div className={styles.receipt} key={event.id}>
                 <p className={styles.receiptMeta}>DAY {event.day} · {customer.name}{handed ? " · お渡し済み" : ""}</p>
-                <p>{item.name}{extra ? ` ＋ ${extra.name}` : ""}</p>
-                <strong>{refused ? "販売を見送った" : `${item.price + (extra?.price ?? 0)} 円`}</strong>
+                <p>{item.name}{extra ? ` ＋ ${extra.name}` : ""}{hospitalPower ? " ＋ モバイル電源（病院用）" : ""}</p>
+                <strong>{refused ? "販売を見送った" : `${item.price + (extra?.price ?? 0) + (hospitalPower ? 1980 : 0)} 円`}</strong>
               </div>
             );
           })}
         </section>
+        {game.flags.some((flag) => flag.startsWith("night:")) ? (
+          <section className={styles.archive} aria-labelledby="notebook-night">
+            <h2 id="notebook-night">深夜のメモ</h2>
+            {COUNTER_MOMENTS.map((moment) => {
+              const selected = selectedCounterChoice(game, moment.id);
+              return selected ? <details key={moment.id} className={styles.entry}>
+                <summary>{moment.title} / {selected.label}</summary><p>{selected.reply}</p>
+              </details> : null;
+            })}
+            {([1, 2, 3, 4, 5] as const).map((day) => {
+              const spot = inspectedSpot(game, day);
+              return spot ? <details key={day} className={styles.entry}>
+                <summary>Day {day} / {spot.label}で気づいたこと</summary><p>{resolveNarrative(spot.finding, game)}</p>
+              </details> : null;
+            })}
+          </section>
+        ) : null}
         {articles.length > 0 ? (
           <section className={styles.archive} aria-labelledby="notebook-news">
             <h2 id="notebook-news">保存通知と記事</h2>

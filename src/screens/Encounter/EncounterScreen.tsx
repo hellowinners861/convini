@@ -90,6 +90,7 @@ export function EncounterScreen({
   const [recommendationOpen, setRecommendationOpen] = useState(false);
   const recommendationTriggerRef = useRef<HTMLButtonElement>(null);
   const recommendationCloseRef = useRef<HTMLButtonElement>(null);
+  const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const restoreRecommendationFocusRef = useRef(false);
   const customer = getTask4Customer(encounter.customerId);
   const requestedItem = getTask4Item(encounter.requestedItemId);
@@ -202,6 +203,11 @@ export function EncounterScreen({
   };
 
   const resultShown = phase.subPhase === "result" && result?.encounterId === encounter.id;
+  useEffect(() => {
+    if (!resultShown) return;
+    resultHeadingRef.current?.focus({ preventScroll: true });
+    resultHeadingRef.current?.scrollIntoView?.({ block: "start", behavior: "auto" });
+  }, [resultShown, encounter.id]);
   const selectedRecommendation = result?.recommendedItemId
     ? encounter.recommendationOptions.find((option) => option.itemId === result.recommendedItemId)
     : undefined;
@@ -410,7 +416,7 @@ export function EncounterScreen({
             <section className={styles.resultPanel} aria-labelledby="receipt-heading" aria-live="polite">
               <div className={styles.resultHeader}>
                 <span className={styles.panelIndex}>RESULT</span>
-                <h2 id="receipt-heading">{TASK4_RECEIPT_UI.resultHeading}</h2>
+                <h2 id="receipt-heading" ref={resultHeadingRef} tabIndex={-1}>{TASK4_RECEIPT_UI.resultHeading}</h2>
               </div>
               <div className={styles.reaction}>
                 <p className={styles.reactionLabel}>来店者の反応</p>

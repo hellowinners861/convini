@@ -3,6 +3,8 @@ import { COUNTER_MOMENTS, NIGHT_COPY, NIGHT_EPILOGUES, NIGHT_FLAGS, QUIET_NIGHTS
 import { TASK4_ENCOUNTERS } from "../content/encounters";
 import { TASK5_NEWS } from "../content/news";
 import { revenueEffects } from "../content/config/outcomes";
+import { CONNECTION_FLAGS } from "../content/connections";
+import { TASK4_ITEMS } from "../content/items";
 import type { AuthoredEncounter, ResultCopy } from "../content/types";
 import { applyEffects } from "./effects";
 
@@ -31,7 +33,11 @@ export function inspectedSpot(game: GameState, day = game.day) {
 }
 
 export function powerAvailable(game: GameState): boolean {
-  return !game.flags.includes(NIGHT_FLAGS.powerMew) && !game.flags.includes(NIGHT_FLAGS.powerHospital);
+  // Old V1 runs already have transaction history, even without the new inventory flag.
+  const soldToMew = game.eventLog.some((event) => event.type === "encounter.decision" &&
+    event.data.encounterId === "d3_mew_return" && event.data.decision === "recommend" &&
+    event.data.recommendedItemId === "mobile_power_bank");
+  return !soldToMew && !game.flags.includes(NIGHT_FLAGS.powerMew) && !game.flags.includes(NIGHT_FLAGS.powerHospital);
 }
 
 export function recommendationUnavailable(game: GameState, encounterId: string, itemId: string): string | null {
@@ -136,14 +142,18 @@ export function nightRecommendationOutcome(game: GameState, encounterId: string,
   const id = nightRecommendationOutcomeId(encounterId, itemId);
   if (!id || !game.flags.includes(NIGHT_FLAGS.repair)) return null;
   const repaired = itemId === "precision_screwdriver";
+  const requested = TASK4_ITEMS.find((item) => item.id === "self_aware_battery")!;
+  const recommended = TASK4_ITEMS.find((item) => item.id === itemId)!;
   return {
     id,
     effects: [
-      ...revenueEffects(480 + (repaired ? 980 : 520)),
+      ...revenueEffects(requested.price + recommended.price),
       { kind: "add", target: "world.machine", amount: 1 },
       { kind: "add", target: "stability", amount: repaired ? 2 : -1 },
       { kind: "setCustomerState", customerId: "hako3", state: "empathetic" },
       ...(repaired ? [{ kind: "setFlag" as const, id: NIGHT_FLAGS.repaired }] : []),
+      ...(repaired && game.flags.includes(CONNECTION_FLAGS.repairQuestion) ?
+        [{ kind: "setFlag" as const, id: CONNECTION_FLAGS.delivery }] : []),
     ],
   };
 }
@@ -202,7 +212,7 @@ export function nightEncounterLines(game: GameState, encounterId: string): strin
     if (game.flags.includes(NIGHT_FLAGS.nameKept)) lines.push(NIGHT_COPY.nameKeptEcho);
     else if (game.flags.includes(NIGHT_FLAGS.nameLost)) lines.push(NIGHT_COPY.nameLostEcho);
   }
-  if (encounterId === "d4_miyashita_triage" && game.flags.includes(NIGHT_FLAGS.powerMew)) lines.push(NIGHT_COPY.powerGone);
+  if (encounterId === "d4_miyashita_triage" && !powerAvailable(game) && !game.flags.includes(NIGHT_FLAGS.powerHospital)) lines.push(NIGHT_COPY.powerGone);
   if (encounterId === "d4_hako3_network" && game.flags.includes(NIGHT_FLAGS.repaired)) lines.push("HAKO-3は修理完了の伝票を置いた。「薬品冷蔵庫、再稼働。昨夜のドライバーは、病院に預けました」");
   if (encounterId === "d4_mew_arrivals") lines.push("二便目の配送が到着し、モバイル電源が再入荷した。宮下はもう病棟へ出発している。");
   return lines;

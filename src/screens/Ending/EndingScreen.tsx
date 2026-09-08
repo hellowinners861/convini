@@ -32,17 +32,17 @@ export function EndingScreen({ game, endingResult, onOpenRunSummary }: EndingScr
           <h2 id="ending-final-line-heading">最後の一言</h2>
           <p className={styles.prose}>{finalLine}</p>
         </section>
-        <div className={styles.actions}>
-          <button className={styles.button} type="button" onClick={onOpenRunSummary}>
-            周回結果を見る
-          </button>
-        </div>
         {nightEpilogues(game).map((epilogue) => (
           <section className={styles.panel} key={epilogue.flag} aria-label={epilogue.title}>
             <h2>{epilogue.title}</h2>
             <p className={styles.prose}>{epilogue.body}</p>
           </section>
         ))}
+        <div className={styles.actions}>
+          <button className={styles.button} type="button" onClick={onOpenRunSummary}>
+            周回結果を見る
+          </button>
+        </div>
       </div>
     </ScreenFrame>
   );

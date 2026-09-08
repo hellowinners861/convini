@@ -94,6 +94,7 @@ export function ReceiptRecord({ event, game }: { event: DomainEvent; game: GameS
       <p>{refused ? `販売を断った商品：${requested.name}` : `${requested.name} / ${requested.price}円`}</p>
       {recommended ? <p>おすすめ：{recommended.name} / {recommended.price}円</p> : null}
       {hospitalPower ? <p>モバイル電源 / 1,980円 / 病院用</p> : null}
+      {event.data.encounterId === "d2_ren_spirit_echo" && game.flags.includes(NIGHT_FLAGS.promise) ? <p>余白のメモ：明日も「大庭 蓮」と呼ぶ。</p> : null}
       <p className={styles.total}>合計 {refused ? 0 : requested.price + (recommended?.price ?? 0) + (hospitalPower ? 1980 : 0)}円</p>
     </div>
   );
