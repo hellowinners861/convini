@@ -32,6 +32,11 @@ import {
   type PersistedRunV1,
 } from "./persistence/contracts";
 import {
+  applyNightAction, applyNightSale, nightRecommendationOutcome,
+  nightRecommendationOutcomeId, recommendationUnavailable, type NightAction,
+} from "../engine/nightShift";
+import { NIGHT_FLAGS } from "../content/nightShift";
+import {
   getTask5Customer,
   getTask5DayPlan,
   getTask5Encounter,
@@ -89,7 +94,7 @@ export interface AppState {
   openNewsId: string | null;
 }
 
-export type AppAction =
+export type AppAction = NightAction
   | { type: "START_NEW_RUN"; runId: string; contentVersion: string; runNumber?: number }
   | { type: "RESTORE_RUN"; run: PersistedRunV1 }
   | { type: "CONTINUE_RUN" }
@@ -887,6 +892,8 @@ function permittedRecommendationOutcomeIds(
   recommendedItemId: string,
 ): Set<string> {
   const permitted = new Set<string>([encounter.outcomes.defaultRecommend.id]);
+  const nightOutcomeId = nightRecommendationOutcomeId(encounter.id, recommendedItemId);
+  if (nightOutcomeId) permitted.add(nightOutcomeId);
   for (const pair of TASK5_CONTENT.recommendationPairs) {
     if (
       pair.customerId !== encounter.customerId ||
@@ -977,6 +984,8 @@ function validateEncounterDecisionEvent(
     ) {
       return false;
     }
+    if (outcomeId === nightRecommendationOutcomeId(encounter.id, recommendedItemId) &&
+      !run.flags.includes(NIGHT_FLAGS.repair)) return false;
   } else if (
     hasRecommendedItem ||
     outcomeId !==
@@ -1477,11 +1486,12 @@ function resolveEncounterDecision(
     } else {
       if (
         !recommendedItemId ||
-        !encounter.recommendationOptions.some((option) => option.itemId === recommendedItemId)
+        !encounter.recommendationOptions.some((option) => option.itemId === recommendedItemId) ||
+        recommendationUnavailable(state.game, encounter.id, recommendedItemId)
       ) {
         return state;
       }
-      outcome = resolveRecommendation({
+      outcome = nightRecommendationOutcome(state.game, encounter.id, recommendedItemId) ?? resolveRecommendation({
         state: state.game,
         customerId: encounter.customerId,
         requestedItemId: encounter.requestedItemId,
@@ -1516,7 +1526,7 @@ function resolveEncounterDecision(
     }
 
     const nextGame = appendEncounterDecisionEvent(
-      applyOutcome(state.game, combinedOutcome),
+      applyNightSale(applyOutcome(state.game, combinedOutcome), encounter.id, decision, recommendedItemId),
       event,
     );
     return {
@@ -1577,6 +1587,14 @@ function advanceToBriefing(state: AppState, nextDay: Day): AppState {
 
 export function gameReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
+    case "CHOOSE_COUNTER_MOMENT":
+    case "INSPECT_NIGHT":
+    case "PIN_EVIDENCE":
+    case "PRESENT_EVIDENCE": {
+      if (!state.game || state.view === "title") return state;
+      const game = applyNightAction(state.game, action);
+      return game === state.game ? state : { ...state, game };
+    }
     case "RESTORE_RUN": {
       if (state.view !== "title" || state.game !== null) {
         return rejected(state);

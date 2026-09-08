@@ -2,14 +2,17 @@ import { getTask4DayPlan, resolveNarrative, TASK4_BRIEFING_UI } from "../../cont
 import type { GameState } from "../../domain";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { CONNECTION_HINTS } from "../../content/connections";
+import { NightWatch } from "../../components/NightShift";
+import type { NightAction } from "../../engine/nightShift";
 import styles from "../Task3/Task3Screens.module.css";
 
 interface BriefingScreenProps {
   game: GameState;
   onBegin: () => void;
+  onNightAction?: (action: NightAction) => void;
 }
 
-export function BriefingScreen({ game, onBegin }: BriefingScreenProps) {
+export function BriefingScreen({ game, onBegin, onNightAction }: BriefingScreenProps) {
   const plan = getTask4DayPlan(game.day);
   const briefing = plan.presentation.briefing;
 
@@ -48,6 +51,7 @@ export function BriefingScreen({ game, onBegin }: BriefingScreenProps) {
             {TASK4_BRIEFING_UI.beginShiftAction}
           </button>
         </div>
+        <NightWatch game={game} onNightAction={onNightAction} />
       </div>
     </ScreenFrame>
   );

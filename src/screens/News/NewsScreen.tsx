@@ -3,6 +3,8 @@ import { getTask5NewsArticle } from "../../content";
 import type { GameState } from "../../domain";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { CONNECTION_UPDATES } from "../../content/connections";
+import { EvidenceNotebook } from "../../components/NightShift";
+import type { NightAction } from "../../engine/nightShift";
 import styles from "./NewsScreen.module.css";
 
 interface NewsScreenProps {
@@ -10,9 +12,10 @@ interface NewsScreenProps {
   openNewsId: string | null;
   onRead: (newsId: string) => void;
   onAdvance: () => void;
+  onNightAction?: (action: NightAction) => void;
 }
 
-export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenProps) {
+export function NewsScreen({ game, openNewsId, onRead, onAdvance, onNightAction }: NewsScreenProps) {
   const selections = getCommittedNewsSelections(game);
   const articles = selections.map((selection) => getTask5NewsArticle(selection.newsId));
   const readCount = selections.filter((selection) => game.readNews.includes(selection.newsId)).length;
@@ -57,7 +60,7 @@ export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenPr
                   </h2>
                   {showAuthoredArticle ? (
                     <>
-                      <p className={styles.savedNotification}>保存していた通知：{article.notificationHeadline}</p>
+                      <div className={styles.savedNotification}><span>保存された通知</span><p>{article.notificationHeadline}</p></div>
                       <p className={styles.articleBody}>{article.body}</p>
                     </>
                   ) : null}
@@ -103,6 +106,7 @@ export function NewsScreen({ game, openNewsId, onRead, onAdvance }: NewsScreenPr
           >
             {advanceName}
           </button>
+          <EvidenceNotebook key={game.day} game={game} onNightAction={onNightAction} />
         </aside>
       </div>
     </ScreenFrame>

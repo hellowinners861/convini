@@ -137,7 +137,11 @@ describe("Task 5 controller golden routes", () => {
       expect(game.stability).toBe(route.expected.stability);
       expect(game.awareness).toBe(route.expected.awareness);
       expect(game.customerStates).toEqual(route.expected.customerStates);
-      expect(game.flags).toEqual(route.expected.flags);
+      // The original route oracle predates the last-unit inventory record.
+      expect(game.flags.filter((flag) => !flag.startsWith("night:"))).toEqual(route.expected.flags);
+      expect(game.flags.filter((flag) => flag.startsWith("night:"))).toEqual(
+        decisionByEncounter.get("d3_mew_return") === "mobile_power_bank" ? ["night:power-mew"] : [],
+      );
       expect(decisionEvents(game)).toHaveLength(route.expected.encounterDecisionCount);
       expect(game.newsSelections).toHaveLength(route.expected.selectedNewsCount);
       expect(new Set(game.newsSelections.map((selection) => selection.newsId))).toHaveLength(15);
@@ -170,7 +174,7 @@ describe("Task 5 controller golden routes", () => {
         awareness: game.awareness,
         convergenceAxis: ending.convergenceAxis,
         customerStates: game.customerStates,
-        flags: game.flags,
+        flags: game.flags.filter((flag) => !flag.startsWith("night:")),
         encounterDecisionCount: decisionEvents(game).length,
         completedDayCount: new Set(game.newsSelections.map((selection) => selection.day)).size,
         selectedNewsCount: game.newsSelections.length,

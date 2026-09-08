@@ -122,7 +122,7 @@ function AppContent() {
       <ShiftNotebook game={game} />
 
       {state.view === "briefing" ? (
-        <BriefingScreen game={game} onBegin={() => dispatch({ type: "BEGIN_DAY" })} />
+        <BriefingScreen game={game} onBegin={() => dispatch({ type: "BEGIN_DAY" })} onNightAction={dispatch} />
       ) : null}
 
       {state.view === "encounter" && game.phase.kind === "encounter" ? (
@@ -154,6 +154,7 @@ function AppContent() {
                 }
               }}
               onNext={() => dispatch({ type: "NEXT_ENCOUNTER" })}
+              onNightAction={dispatch}
             />
           );
         })()
@@ -172,6 +173,7 @@ function AppContent() {
           openNewsId={state.openNewsId}
           onRead={(newsId) => dispatch({ type: "READ_NEWS", newsId })}
           onAdvance={() => dispatch({ type: "ADVANCE_DAY" })}
+          onNightAction={dispatch}
         />
       ) : null}
 

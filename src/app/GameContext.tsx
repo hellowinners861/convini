@@ -105,6 +105,10 @@ function cloneSettings(settings: PersistedSettingsV1): PersistedSettingsV1 {
 function isCheckpointAction(action: AppAction): boolean {
   switch (action.type) {
     case "START_NEW_RUN":
+    case "CHOOSE_COUNTER_MOMENT":
+    case "INSPECT_NIGHT":
+    case "PIN_EVIDENCE":
+    case "PRESENT_EVIDENCE":
     case "BEGIN_DAY":
     case "SELL":
     case "REFUSE":

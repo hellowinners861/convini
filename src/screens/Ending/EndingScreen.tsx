@@ -2,6 +2,7 @@ import { getTask5EndingRecord, resolveNarrative } from "../../content";
 import type { GameState } from "../../domain";
 import type { EndingResultState } from "../../app/gameController";
 import { ScreenFrame } from "../../components/ScreenFrame";
+import { nightEpilogues } from "../../engine/nightShift";
 import styles from "../Task3/Task3Screens.module.css";
 
 interface EndingScreenProps {
@@ -36,6 +37,12 @@ export function EndingScreen({ game, endingResult, onOpenRunSummary }: EndingScr
             周回結果を見る
           </button>
         </div>
+        {nightEpilogues(game).map((epilogue) => (
+          <section className={styles.panel} key={epilogue.flag} aria-label={epilogue.title}>
+            <h2>{epilogue.title}</h2>
+            <p className={styles.prose}>{epilogue.body}</p>
+          </section>
+        ))}
       </div>
     </ScreenFrame>
   );

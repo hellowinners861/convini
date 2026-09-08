@@ -15,6 +15,9 @@ import { ScreenFrame } from "../../components/ScreenFrame";
 import { connectionEcho, receiptFlag } from "../../content/connections";
 import { CONTEXT_RESULT_COPY } from "../../content/pairs/contextPairs";
 import { evaluateCondition } from "../../engine";
+import { CounterMomentPanel, NightWatch, PresentEvidencePanel } from "../../components/NightShift";
+import { NIGHT_FLAGS } from "../../content/nightShift";
+import { nightEncounterLines, nightReceiptNotes, nightResultCopy, recommendationUnavailable, type NightAction } from "../../engine/nightShift";
 import styles from "./EncounterScreen.module.css";
 
 type EncounterPhase = Extract<GamePhase, { kind: "encounter" }>;
@@ -67,6 +70,7 @@ interface EncounterScreenProps {
   onNext: () => void;
   onAsk: (questionId: string) => void;
   onHandReceipt: () => void;
+  onNightAction?: (action: NightAction) => void;
 }
 
 export function EncounterScreen({
@@ -81,6 +85,7 @@ export function EncounterScreen({
   onNext,
   onAsk,
   onHandReceipt,
+  onNightAction,
 }: EncounterScreenProps) {
   const [recommendationOpen, setRecommendationOpen] = useState(false);
   const recommendationTriggerRef = useRef<HTMLButtonElement>(null);
@@ -203,12 +208,12 @@ export function EncounterScreen({
   const selectedRecommendedItem = selectedRecommendation
     ? getTask4Item(selectedRecommendation.itemId)
     : undefined;
-  const resultCopy =
+  const resultCopy = (result ? nightResultCopy(result.outcomeId) : null) ?? (
     result?.decision === "recommend"
       ? selectedRecommendation?.resultCopy
       : result
         ? encounter.outcomes[result.decision].copy
-        : undefined;
+        : undefined);
   const resolvedResultCopy = resultCopy
     ? {
         result: resolveNarrative(resultCopy.result, game),
@@ -223,6 +228,9 @@ export function EncounterScreen({
       : result?.decision === "recommend" && selectedRecommendedItem
         ? [requestedItem, selectedRecommendedItem]
         : [];
+  if (resultShown && result?.decision !== "refuse" && encounter.id === "d4_miyashita_triage" && game.flags.includes(NIGHT_FLAGS.powerHospital)) {
+    soldItems.push(getTask4Item("mobile_power_bank"));
+  }
   const basketTotal = soldItems.reduce((total, item) => total + item.price, 0);
 
   return (
@@ -245,6 +253,7 @@ export function EncounterScreen({
               </p>
               <p className={styles.dialogueText}>{resolveNarrative(encounter.intro, game)}</p>
               {echo ? <p className={styles.connectionEcho}>{echo}</p> : null}
+              {!resultShown ? nightEncounterLines(game, encounter.id).map((line) => <p className={styles.nightEcho} key={line}>{line}</p>) : null}
             </div>
             {availableQuestions.length > 0 ? (
               <section className={styles.questionPanel} aria-label="ひとつ聞く">
@@ -266,6 +275,8 @@ export function EncounterScreen({
                 ) : <p className={styles.questionHint}>この接客では、話を聞かなかった。</p>}
               </section>
             ) : null}
+            {!resultShown ? <CounterMomentPanel game={game} encounterId={encounter.id} onNightAction={onNightAction} /> : null}
+            {!resultShown ? <PresentEvidencePanel key={encounter.id} game={game} encounter={encounter} onNightAction={onNightAction} /> : null}
           </section>
 
           {!resultShown ? (
@@ -371,13 +382,14 @@ export function EncounterScreen({
                               className={styles.recommendationButton}
                               key={option.id}
                               type="button"
-                              disabled={!decisionAllowed}
+                              disabled={!decisionAllowed || Boolean(recommendationUnavailable(game, encounter.id, option.itemId))}
                               onClick={() => {
                                 setRecommendationOpen(false);
                                 onDecision("recommend", option.itemId);
                               }}
                             >
                               <span>{option.label}</span>
+                              {recommendationUnavailable(game, encounter.id, option.itemId) ? <strong>{recommendationUnavailable(game, encounter.id, option.itemId)}</strong> : null}
                               <small>
                                 <span className={styles.recommendationProductName}>{item.name}</span>
                                 <span aria-hidden="true"> / </span>
@@ -420,6 +432,7 @@ export function EncounterScreen({
                   <p>{TASK4_RECEIPT_UI.dailyRevenueLabel}: {game.revenue.today}円</p>
                 </div>
                 <p className={styles.resultReadback}>{resolvedResultCopy.readback}</p>
+                {result ? nightReceiptNotes(game, encounter.id, result.decision).map((note) => <p className={styles.nightEcho} key={note}>{note}</p>) : null}
               </div>
               {encounter.receiptReply && result?.decision !== "refuse" ? (
                 <div className={styles.receiptHandoff}>
@@ -442,6 +455,7 @@ export function EncounterScreen({
             </section>
           ) : null}
         </div>
+        {resultShown ? <NightWatch game={game} onNightAction={onNightAction} /> : null}
       </div>
     </ScreenFrame>
   );

@@ -487,6 +487,15 @@
   color: var(--ink);
 }
 
+.nightEcho {
+  margin: 0.65rem 0 0;
+  border-left: 2px solid var(--fluorescent);
+  padding-left: 0.75rem;
+  color: var(--ink);
+  font-size: 0.86rem;
+  line-height: 1.8;
+}
+
 .viewportStatus {
   color: var(--muted);
 }
